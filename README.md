@@ -1,4 +1,4 @@
-TicTacToe
-=========
+Chain Reaction
+==============
 
-TicTacToe game
+Chain Reaction game
