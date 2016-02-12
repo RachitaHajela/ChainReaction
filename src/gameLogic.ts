@@ -1,11 +1,25 @@
 interface Cell {
+    row: number;
+    col: number;
+}
+
+
+interface CellState {
     playerId: number;
     numMolecules: number;
 }
-type Board = Cell[][]
+
+interface Explosion {
+    cellsExploded: Cell[];
+    boardAfterExplosions: Board;
+}
+
+type Board = CellState[][]
 interface BoardDelta {
-  row: number;
-  col: number;
+  //row: number;
+  //col: number;
+  currMoveCell: Cell;
+  explosions: Explosion[];
 }
 interface IState {
   board: Board;
@@ -13,8 +27,8 @@ interface IState {
 }
 
 module gameLogic {
-  export const ROWS = 3;
-  export const COLS = 3;
+  export const ROWS = 6;
+  export const COLS = 4;
 
   /** Returns the initial TicTacToe board, which is a ROWSxCOLS matrix containing ''. */
   function getInitialBoard(): Board {
@@ -23,7 +37,7 @@ module gameLogic {
       board[i] = [];
       for (let j = 0; j < COLS; j++) {
         board[i][j].playerId = -1;
-        board[i][j].numMolecules = -1
+        board[i][j].numMolecules = 0
       }
     }
     return board;
@@ -95,15 +109,17 @@ function playerWon(playerId: number, board: Board): boolean {
       stateBeforeMove = getInitialState();
     }
     let board: Board = stateBeforeMove.board;
-    if (board[row][col].playerId !== turnIndexBeforeMove) {
+    if (board[row][col].playerId !== turnIndexBeforeMove && board[row][col].playerId !== -1) {
       throw new Error("One can only make a move in an empty position or its own color!");
     }
     if (getWinner(board) !== '' || isTie(board)) {
-      throw new Error("Can only make a move if the game is not over!");
+        throw new Error("Can only make a move if the game is not over!");
     }
     let boardAfterMove = angular.copy(board);
     //change number of molecules in cell
+    boardAfterMove[row][col].playerId = turnIndexBeforeMove;
     boardAfterMove[row][col].numMolecules++;
+    let stateAfterMove: IState = updateBoard(row,col,boardAfterMove,turnIndexBeforeMove);
     let winner = getWinner(boardAfterMove);
     let endMatchScores: number[];
     let turnIndexAfterMove: number;
@@ -116,11 +132,113 @@ function playerWon(playerId: number, board: Board): boolean {
       turnIndexAfterMove = 1 - turnIndexBeforeMove;
       endMatchScores = null;
     }
-    let delta: BoardDelta = {row: row, col: col};
-    let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
+  //  let delta: BoardDelta = {row: row, col: col};
+   // let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
     return {endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove};
   }
   
+  function maxMolecules(row: number, col: number): number {
+      let maxMol: number = 4;
+      if (row == 0 || row == ROWS-1) {
+          maxMol--;
+      }
+      if (col == 0 || col == COLS-1) {
+          maxMol--;
+      }
+      return maxMol;
+  }
+  
+  function updateBoard(row: number,col: number, board: Board, playerId: number): IState {
+      let currMoveCell: Cell = {row: row, col: col};
+      let explosions: Explosion[] = [];
+      if(board[row][col].numMolecules !== maxMolecules(row, col)) {
+          
+          let delta: BoardDelta = {currMoveCell: currMoveCell,explosions: explosions};
+          let stateAfterMove: IState = {delta: delta, board: board};
+          return stateAfterMove;
+      } 
+      let explosionQueueCurr: Cell[] = [currMoveCell];
+      let explosionQueueNext: Cell[] = [];
+      let explosion: Explosion = {cellsExploded : [], boardAfterExplosions : board};
+      //let explosion: Explosion;
+      //explosion.boardAfterExplosions = board
+      while (explosionQueueCurr.length > 0) {
+          //boardchange and add in delta
+          let currCell: Cell = angular.copy(explosionQueueCurr[0]);
+          explosionQueueCurr.splice(0, 1);
+          
+          board[currCell.row][currCell.col].playerId = -1;
+          board[currCell.row][currCell.col].numMolecules = 0;
+          
+          try {
+            board[currCell.row-1][currCell.col].playerId = playerId;
+            board[currCell.row-1][currCell.col].numMolecules++;
+            if (board[currCell.row-1][currCell.col].numMolecules === maxMolecules(row-1, col)) {
+                let newCell : Cell = {row: row-1, col : col};
+                explosionQueueNext.push(newCell);
+            }
+          } catch (err) {
+              
+          }
+          try {
+            board[currCell.row+1][currCell.col].playerId = playerId;
+            board[currCell.row+1][currCell.col].numMolecules++;
+            if (board[currCell.row+1][currCell.col].numMolecules === maxMolecules(row+1, col)) {
+                let newCell : Cell = {row: row+1, col : col};
+                explosionQueueNext.push(newCell);
+            }
+          } catch (err) {
+              
+          }
+          try {
+            board[currCell.row][currCell.col-1].playerId = playerId;
+            board[currCell.row][currCell.col-1].numMolecules++;
+            if (board[currCell.row][currCell.col-1].numMolecules === maxMolecules(row, col-1)) {
+                let newCell : Cell = {row: row, col : col-1};
+                explosionQueueNext.push(newCell);
+            }
+          } catch (err) {
+              
+          }
+          try {
+            board[currCell.row][currCell.col+1].playerId = playerId;
+            board[currCell.row][currCell.col+1].numMolecules++;
+            if (board[currCell.row][currCell.col+1].numMolecules === maxMolecules(row, col+1)) {
+                let newCell : Cell = {row: row, col : col+1};
+                explosionQueueNext.push(newCell);
+            }
+          } catch (err) {
+              
+          }
+          
+          explosion.cellsExploded.push(currCell);
+          explosion.boardAfterExplosions = angular.copy(board);
+
+          //check for winner
+          if (playerWon(playerId, board)) {
+            explosions.push(explosion);
+            let delta: BoardDelta = {currMoveCell: currMoveCell, explosions: explosions};
+            let stateAfterMove: IState = {delta: delta, board: board};
+            return stateAfterMove;
+          }
+          
+          //check for more explosions
+          //board[row]
+          
+          if (explosionQueueCurr.length == 0) {
+              explosionQueueCurr = angular.copy(explosionQueueNext);
+              explosionQueueNext = [];
+              explosions.push(explosion);
+              explosion.cellsExploded = [];
+              explosion.boardAfterExplosions = angular.copy(board);
+          }
+      } 
+    //  explosions.push(explosion);
+      let delta: BoardDelta = {currMoveCell: currMoveCell, explosions: explosions};
+      let stateAfterMove: IState = {delta: delta, board: board};
+      return stateAfterMove;
+      
+  }
   export function checkMoveOk(stateTransition: IStateTransition): void {
     // We can assume that turnIndexBeforeMove and stateBeforeMove are legal, and we need
     // to verify that the move is OK.
@@ -128,8 +246,8 @@ function playerWon(playerId: number, board: Board): boolean {
     let stateBeforeMove: IState = stateTransition.stateBeforeMove;
     let move: IMove = stateTransition.move;
     let deltaValue: BoardDelta = stateTransition.move.stateAfterMove.delta;
-    let row = deltaValue.row;
-    let col = deltaValue.col;
+    let row = deltaValue.currMoveCell.row;
+    let col = deltaValue.currMoveCell.col;
     let expectedMove = createMove(stateBeforeMove, row, col, turnIndexBeforeMove);
     if (!angular.equals(move, expectedMove)) {
       throw new Error("Expected move=" + angular.toJson(expectedMove, true) +
