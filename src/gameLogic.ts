@@ -78,7 +78,7 @@ function playerWon(playerId: number, board: Board): boolean {
      for (let i = 0; i < ROWS; i++) {
       for (let j = 0; j < COLS; j++) {
         let cell = board[i][j];
-        if (cell.playerId != playerId) {
+        if (cell.playerId !== playerId) {
             return false;
         }     
       }
@@ -95,14 +95,15 @@ function playerWon(playerId: number, board: Board): boolean {
       stateBeforeMove = getInitialState();
     }
     let board: Board = stateBeforeMove.board;
-    if (board[row][col] !== '') {
-      throw new Error("One can only make a move in an empty position!");
+    if (board[row][col].playerId !== turnIndexBeforeMove) {
+      throw new Error("One can only make a move in an empty position or its own color!");
     }
     if (getWinner(board) !== '' || isTie(board)) {
       throw new Error("Can only make a move if the game is not over!");
     }
     let boardAfterMove = angular.copy(board);
-    boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'X' : 'O';
+    //change number of molecules in cell
+    boardAfterMove[row][col].numMolecules++;
     let winner = getWinner(boardAfterMove);
     let endMatchScores: number[];
     let turnIndexAfterMove: number;
@@ -119,7 +120,7 @@ function playerWon(playerId: number, board: Board): boolean {
     let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
     return {endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove};
   }
-
+  
   export function checkMoveOk(stateTransition: IStateTransition): void {
     // We can assume that turnIndexBeforeMove and stateBeforeMove are legal, and we need
     // to verify that the move is OK.
