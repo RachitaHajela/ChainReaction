@@ -1,4 +1,8 @@
-type Board = string[][];
+interface Cell {
+    playerId: number;
+    numMolecules: number;
+}
+type Board = Cell[][]
 interface BoardDelta {
   row: number;
   col: number;
@@ -18,7 +22,8 @@ module gameLogic {
     for (let i = 0; i < ROWS; i++) {
       board[i] = [];
       for (let j = 0; j < COLS; j++) {
-        board[i][j] = '';
+        board[i][j].playerId = -1;
+        board[i][j].numMolecules = -1
       }
     }
     return board;
@@ -36,16 +41,16 @@ module gameLogic {
    *      ['O', 'X', 'X']]
    */
   function isTie(board: Board): boolean {
-    for (let i = 0; i < ROWS; i++) {
-      for (let j = 0; j < COLS; j++) {
-        if (board[i][j] === '') {
-          // If there is an empty cell then we do not have a tie.
-          return false;
-        }
-      }
-    }
+    // for (let i = 0; i < ROWS; i++) {
+    //   for (let j = 0; j < COLS; j++) {
+    //     if (board[i][j] === '') {
+    //       // If there is an empty cell then we do not have a tie.
+    //       return false;
+    //     }
+    //   }
+    // }
     // No empty cells, so we have a tie!
-    return true;
+    return false;
   }
 
   /**
@@ -57,36 +62,29 @@ module gameLogic {
    *      ['X', '', '']]
    */
   function getWinner(board: Board): string {
-    let boardString = '';
-    for (let i = 0; i < ROWS; i++) {
+      if (playerWon(0, board)) {
+          return '0';
+      } else if (playerWon(1, board)) {
+          return '1';
+      } else {
+          return '';
+      }
+  }
+  
+  /**
+   * Returns if the particular player has won or not
+   */
+function playerWon(playerId: number, board: Board): boolean {
+     for (let i = 0; i < ROWS; i++) {
       for (let j = 0; j < COLS; j++) {
         let cell = board[i][j];
-        boardString += cell === '' ? ' ' : cell;
+        if (cell.playerId != playerId) {
+            return false;
+        }     
       }
     }
-    let win_patterns = [
-      'XXX......',
-      '...XXX...',
-      '......XXX',
-      'X..X..X..',
-      '.X..X..X.',
-      '..X..X..X',
-      'X...X...X',
-      '..X.X.X..'
-    ];
-    for (let win_pattern of win_patterns) {
-      let x_regexp = new RegExp(win_pattern);
-      let o_regexp = new RegExp(win_pattern.replace(/X/g, 'O'));
-      if (x_regexp.test(boardString)) {
-        return 'X';
-      }
-      if (o_regexp.test(boardString)) {
-        return 'O';
-      }
-    }
-    return '';
-  }
-
+    return true;
+} 
   /**
    * Returns the move that should be performed when player
    * with index turnIndexBeforeMove makes a move in cell row X col.
