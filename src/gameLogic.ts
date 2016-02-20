@@ -36,8 +36,9 @@ module gameLogic {
     for (let i = 0; i < ROWS; i++) {
       board[i] = [];
       for (let j = 0; j < COLS; j++) {
-        board[i][j].playerId = -1;
-        board[i][j].numMolecules = 0
+        //board[i][j].playerId = -1;
+        //board[i][j].numMolecules = 0
+        board[i][j] = {playerId: -1, numMolecules: 0};
       }
     }
     return board;
@@ -120,6 +121,8 @@ function playerWon(playerId: number, board: Board): boolean {
     boardAfterMove[row][col].playerId = turnIndexBeforeMove;
     boardAfterMove[row][col].numMolecules++;
     let stateAfterMove: IState = updateBoard(row,col,boardAfterMove,turnIndexBeforeMove);
+    log.log(stateAfterMove.delta.currMoveCell);
+    log.log(stateAfterMove.delta.explosions[0]);
     let winner = getWinner(boardAfterMove);
     let endMatchScores: number[];
     let turnIndexAfterMove: number;
@@ -152,7 +155,7 @@ function playerWon(playerId: number, board: Board): boolean {
       let currMoveCell: Cell = {row: row, col: col};
       let explosions: Explosion[] = [];
       if(board[row][col].numMolecules !== maxMolecules(row, col)) {
-          
+          log.log("no explosion -- if");
           let delta: BoardDelta = {currMoveCell: currMoveCell,explosions: explosions};
           let stateAfterMove: IState = {delta: delta, board: board};
           return stateAfterMove;
@@ -163,6 +166,7 @@ function playerWon(playerId: number, board: Board): boolean {
       //let explosion: Explosion;
       //explosion.boardAfterExplosions = board
       while (explosionQueueCurr.length > 0) {
+          log.log("while");
           //boardchange and add in delta
           let currCell: Cell = angular.copy(explosionQueueCurr[0]);
           explosionQueueCurr.splice(0, 1);
@@ -212,6 +216,7 @@ function playerWon(playerId: number, board: Board): boolean {
           }
           
           explosion.cellsExploded.push(currCell);
+          log.log(explosion.cellsExploded[0])
           explosion.boardAfterExplosions = angular.copy(board);
 
           //check for winner
@@ -226,15 +231,19 @@ function playerWon(playerId: number, board: Board): boolean {
           //board[row]
           
           if (explosionQueueCurr.length == 0) {
+              log.log("length = 0")
               explosionQueueCurr = angular.copy(explosionQueueNext);
               explosionQueueNext = [];
-              explosions.push(explosion);
+              explosions.push(angular.copy(explosion));
+              log.log(explosions[0].cellsExploded[0])
               explosion.cellsExploded = [];
               explosion.boardAfterExplosions = angular.copy(board);
           }
       } 
     //  explosions.push(explosion);
+      log.log(explosions[0].cellsExploded[0])
       let delta: BoardDelta = {currMoveCell: currMoveCell, explosions: explosions};
+      log.log(delta.explosions[0].cellsExploded[0])
       let stateAfterMove: IState = {delta: delta, board: board};
       return stateAfterMove;
       

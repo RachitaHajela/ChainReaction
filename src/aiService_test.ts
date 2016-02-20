@@ -12,6 +12,7 @@ describe("aiService", function() {
     return aiService.createComputerMove(move, {maxDepth: maxDepth});
   }
 
+  /*
   it("getPossibleMoves returns exactly one cell", function() {
     let board =
         [['O', 'O', 'X'],
@@ -123,5 +124,6 @@ describe("aiService", function() {
          ['', '', '']], 0, 5);
     expect(angular.equals(move.stateAfterMove.delta, {row: 0, col: 0})).toBe(true);
   });
-
+  */
+  
 });

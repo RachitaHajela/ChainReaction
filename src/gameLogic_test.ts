@@ -1,4 +1,5 @@
-describe("In TicTacToe", function() {
+describe("In ChainReaction", function() {
+  /*
   let OK = true;
   let ILLEGAL = false;
   let X_TURN = 0;
@@ -43,7 +44,154 @@ describe("In TicTacToe", function() {
       }
     }
   }
+  */
+  
+  let LEGAL = true;
+  let ILLEGAL = false;
+  let PLAYER1_TURN = 0;
+  let PLAYER2_TURN = 1;
+  let NO_ONE_TURN = -1;
+  let NO_ONE_WINS: number[] = null;
+  let PLAYER1_WIN_SCORES = [1, 0];
+  let PLAYER2_WIN_SCORES = [0, 1];
+  let TIE_SCORES = [0, 0];
+  let ROWS = 6;
+  let COLS = 4;
 
+  function createBoardDelta(row: number, col: number, explosions: Explosion[]): BoardDelta {
+      let cell: Cell = {row: row, col: col};
+      //cell.row = row;
+      //cell.col = col;
+      let boardDelta : BoardDelta = {
+        currMoveCell : cell,
+        explosions : explosions};
+      return boardDelta;
+  }
+  
+  function createCellState(playerId : number, numMolecules: number): CellState {
+      let cellState : CellState = {playerId: playerId, numMolecules: numMolecules};
+      return cellState;
+  }
+
+  function expectMove(
+      isOk: boolean,
+      turnIndexBeforeMove: number,
+      boardBeforeMove: Board,
+      row: number,
+      col: number,
+      explosions: Explosion[],
+      boardAfterMove: Board,
+      turnIndexAfterMove: number,
+      endMatchScores: number[]): void {
+    let stateTransition: IStateTransition = {
+      turnIndexBeforeMove: turnIndexBeforeMove,
+      stateBeforeMove: boardBeforeMove ? {board: boardBeforeMove, delta: null} : null,
+      move: {
+        turnIndexAfterMove: turnIndexAfterMove,
+        endMatchScores: endMatchScores,
+        stateAfterMove: {board: boardAfterMove, delta: createBoardDelta(row, col, explosions)}
+      },
+      numberOfPlayers: null
+    };
+    if (isOk) {
+      gameLogic.checkMoveOk(stateTransition);
+    } else {
+      // We expect an exception to be thrown :)
+      let didThrowException = false;
+      try {
+        gameLogic.checkMoveOk(stateTransition);
+      } catch (e) {
+        didThrowException = true;
+      }
+      if (!didThrowException) {
+        throw new Error("We expect an illegal move, but checkMoveOk didn't throw any exception!")
+      }
+    }
+  }
+  
+  function createBoard(boardRepr : number[][]): Board {
+    let board: Board = [];
+    for (let i = 0; i < ROWS; i++) {
+      board[i] = [];
+      for (let j = 0; j < COLS; j++) {
+        if (boardRepr[i][j] == 0) {
+            board[i][j] = {playerId: -1, numMolecules: 0};
+        } else if (boardRepr[i][j] > 0) {
+            board[i][j] = {playerId: 0, numMolecules: boardRepr[i][j]};
+        } else {
+            board[i][j] = {playerId: 1, numMolecules: -boardRepr[i][j]};
+        }
+      }
+    }
+    return board;
+  } 
+
+  /*
+  it ("placing player 1 chip in 0x0 from initial state is legal", function() {
+    expectMove(LEGAL, PLAYER1_TURN, null, 0, 0, [],
+      createBoard([[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]), PLAYER2_TURN, NO_ONE_WINS)
+  });
+  
+  it ("placing player 1 chip in 1x1 already containing one player 1's chip is legal", function() {
+    expectMove(LEGAL, PLAYER1_TURN, 
+      createBoard([[0, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]),
+      1, 1, [],
+      createBoard([[0, 0, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]), 
+      PLAYER2_TURN, NO_ONE_WINS)  
+  });
+
+  it ("placing player 2 chip in 1x1 already containing one player 1's chip is illegal", function() {
+    expectMove(ILLEGAL, PLAYER2_TURN, 
+      createBoard([[0, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]),
+      1, 1, [],
+      null, PLAYER1_TURN, NO_ONE_WINS)  
+  });
+
+  it ("placing player 1 chip in 1x1 and setting turn to yourself is illegal", function() {
+    expectMove(ILLEGAL, PLAYER1_TURN, 
+      createBoard([[0, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]),
+      1, 1, [],
+      createBoard([[0, 0, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]), 
+      PLAYER1_TURN, NO_ONE_WINS)  
+  });
+  */
+  
+  it ("placing player 2 chip in 2x2 already containing one player 1's 3 chips (explosion) is legal", function() {
+    let cell : Cell = {row : 2, col : 2};
+    let explosion : Explosion = {cellsExploded : [cell], boardAfterExplosions: createBoard([
+          [0, 0, 0, 0], 
+          [0, 0, -1, 0], 
+          [0, -1, 0, -1], 
+          [0, 0, -1, 0], 
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0]])}
+    expectMove(LEGAL, PLAYER2_TURN, 
+      createBoard([
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0], 
+          [0, 0, -3, 0], 
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0]]),
+      2, 2, [explosion],
+      createBoard([
+          [0, 0, 0, 0], 
+          [0, 0, -1, 0], 
+          [0, -1, 0, -1], 
+          [0, 0, -1, 0], 
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0]]), 
+      PLAYER1_TURN, NO_ONE_WINS)  
+  });
+
+  /*
+  - Simple explosion in middle
+  - Explosion edge cases
+  - Game end - win , ties
+  - Infinite loop
+  */ 
+
+  /*
   it("placing X in 0x0 from initial state is legal", function() {
     expectMove(OK, X_TURN, null, 0, 0,
       [['X', '', ''],
@@ -159,4 +307,5 @@ describe("In TicTacToe", function() {
        ['', '', ''],
        ['', '', '']], O_TURN, NO_ONE_WINS);
   });
+  */
 });

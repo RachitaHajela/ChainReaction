@@ -1,14 +1,16 @@
 var gameLogic;
 (function (gameLogic) {
-    gameLogic.ROWS = 3;
-    gameLogic.COLS = 3;
+    gameLogic.ROWS = 6;
+    gameLogic.COLS = 4;
     /** Returns the initial TicTacToe board, which is a ROWSxCOLS matrix containing ''. */
     function getInitialBoard() {
         var board = [];
         for (var i = 0; i < gameLogic.ROWS; i++) {
             board[i] = [];
             for (var j = 0; j < gameLogic.COLS; j++) {
-                board[i][j] = '';
+                //board[i][j].playerId = -1;
+                //board[i][j].numMolecules = 0
+                board[i][j] = { playerId: -1, numMolecules: 0 };
             }
         }
         return board;
@@ -25,16 +27,16 @@ var gameLogic;
      *      ['O', 'X', 'X']]
      */
     function isTie(board) {
-        for (var i = 0; i < gameLogic.ROWS; i++) {
-            for (var j = 0; j < gameLogic.COLS; j++) {
-                if (board[i][j] === '') {
-                    // If there is an empty cell then we do not have a tie.
-                    return false;
-                }
-            }
-        }
+        // for (let i = 0; i < ROWS; i++) {
+        //   for (let j = 0; j < COLS; j++) {
+        //     if (board[i][j] === '') {
+        //       // If there is an empty cell then we do not have a tie.
+        //       return false;
+        //     }
+        //   }
+        // }
         // No empty cells, so we have a tie!
-        return true;
+        return false;
     }
     /**
      * Return the winner (either 'X' or 'O') or '' if there is no winner.
@@ -45,35 +47,29 @@ var gameLogic;
      *      ['X', '', '']]
      */
     function getWinner(board) {
-        var boardString = '';
+        if (playerWon(0, board)) {
+            return '0';
+        }
+        else if (playerWon(1, board)) {
+            return '1';
+        }
+        else {
+            return '';
+        }
+    }
+    /**
+     * Returns if the particular player has won or not
+     */
+    function playerWon(playerId, board) {
         for (var i = 0; i < gameLogic.ROWS; i++) {
             for (var j = 0; j < gameLogic.COLS; j++) {
                 var cell = board[i][j];
-                boardString += cell === '' ? ' ' : cell;
+                if (cell.playerId !== playerId) {
+                    return false;
+                }
             }
         }
-        var win_patterns = [
-            'XXX......',
-            '...XXX...',
-            '......XXX',
-            'X..X..X..',
-            '.X..X..X.',
-            '..X..X..X',
-            'X...X...X',
-            '..X.X.X..'
-        ];
-        for (var _i = 0; _i < win_patterns.length; _i++) {
-            var win_pattern = win_patterns[_i];
-            var x_regexp = new RegExp(win_pattern);
-            var o_regexp = new RegExp(win_pattern.replace(/X/g, 'O'));
-            if (x_regexp.test(boardString)) {
-                return 'X';
-            }
-            if (o_regexp.test(boardString)) {
-                return 'O';
-            }
-        }
-        return '';
+        return true;
     }
     /**
      * Returns the move that should be performed when player
@@ -84,14 +80,19 @@ var gameLogic;
             stateBeforeMove = getInitialState();
         }
         var board = stateBeforeMove.board;
-        if (board[row][col] !== '') {
-            throw new Error("One can only make a move in an empty position!");
+        if (board[row][col].playerId !== turnIndexBeforeMove && board[row][col].playerId !== -1) {
+            throw new Error("One can only make a move in an empty position or its own color!");
         }
         if (getWinner(board) !== '' || isTie(board)) {
             throw new Error("Can only make a move if the game is not over!");
         }
         var boardAfterMove = angular.copy(board);
-        boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'X' : 'O';
+        //change number of molecules in cell
+        boardAfterMove[row][col].playerId = turnIndexBeforeMove;
+        boardAfterMove[row][col].numMolecules++;
+        var stateAfterMove = updateBoard(row, col, boardAfterMove, turnIndexBeforeMove);
+        log.log(stateAfterMove.delta.currMoveCell);
+        log.log(stateAfterMove.delta.explosions[0]);
         var winner = getWinner(boardAfterMove);
         var endMatchScores;
         var turnIndexAfterMove;
@@ -105,11 +106,111 @@ var gameLogic;
             turnIndexAfterMove = 1 - turnIndexBeforeMove;
             endMatchScores = null;
         }
-        var delta = { row: row, col: col };
-        var stateAfterMove = { delta: delta, board: boardAfterMove };
+        //  let delta: BoardDelta = {row: row, col: col};
+        // let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
         return { endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove };
     }
     gameLogic.createMove = createMove;
+    function maxMolecules(row, col) {
+        var maxMol = 4;
+        if (row == 0 || row == gameLogic.ROWS - 1) {
+            maxMol--;
+        }
+        if (col == 0 || col == gameLogic.COLS - 1) {
+            maxMol--;
+        }
+        return maxMol;
+    }
+    function updateBoard(row, col, board, playerId) {
+        var currMoveCell = { row: row, col: col };
+        var explosions = [];
+        if (board[row][col].numMolecules !== maxMolecules(row, col)) {
+            log.log("no explosion -- if");
+            var delta_1 = { currMoveCell: currMoveCell, explosions: explosions };
+            var stateAfterMove_1 = { delta: delta_1, board: board };
+            return stateAfterMove_1;
+        }
+        var explosionQueueCurr = [currMoveCell];
+        var explosionQueueNext = [];
+        var explosion = { cellsExploded: [], boardAfterExplosions: board };
+        //let explosion: Explosion;
+        //explosion.boardAfterExplosions = board
+        while (explosionQueueCurr.length > 0) {
+            log.log("while");
+            //boardchange and add in delta
+            var currCell = angular.copy(explosionQueueCurr[0]);
+            explosionQueueCurr.splice(0, 1);
+            board[currCell.row][currCell.col].playerId = -1;
+            board[currCell.row][currCell.col].numMolecules = 0;
+            try {
+                board[currCell.row - 1][currCell.col].playerId = playerId;
+                board[currCell.row - 1][currCell.col].numMolecules++;
+                if (board[currCell.row - 1][currCell.col].numMolecules === maxMolecules(row - 1, col)) {
+                    var newCell = { row: row - 1, col: col };
+                    explosionQueueNext.push(newCell);
+                }
+            }
+            catch (err) {
+            }
+            try {
+                board[currCell.row + 1][currCell.col].playerId = playerId;
+                board[currCell.row + 1][currCell.col].numMolecules++;
+                if (board[currCell.row + 1][currCell.col].numMolecules === maxMolecules(row + 1, col)) {
+                    var newCell = { row: row + 1, col: col };
+                    explosionQueueNext.push(newCell);
+                }
+            }
+            catch (err) {
+            }
+            try {
+                board[currCell.row][currCell.col - 1].playerId = playerId;
+                board[currCell.row][currCell.col - 1].numMolecules++;
+                if (board[currCell.row][currCell.col - 1].numMolecules === maxMolecules(row, col - 1)) {
+                    var newCell = { row: row, col: col - 1 };
+                    explosionQueueNext.push(newCell);
+                }
+            }
+            catch (err) {
+            }
+            try {
+                board[currCell.row][currCell.col + 1].playerId = playerId;
+                board[currCell.row][currCell.col + 1].numMolecules++;
+                if (board[currCell.row][currCell.col + 1].numMolecules === maxMolecules(row, col + 1)) {
+                    var newCell = { row: row, col: col + 1 };
+                    explosionQueueNext.push(newCell);
+                }
+            }
+            catch (err) {
+            }
+            explosion.cellsExploded.push(currCell);
+            log.log(explosion.cellsExploded[0]);
+            explosion.boardAfterExplosions = angular.copy(board);
+            //check for winner
+            if (playerWon(playerId, board)) {
+                explosions.push(explosion);
+                var delta_2 = { currMoveCell: currMoveCell, explosions: explosions };
+                var stateAfterMove_2 = { delta: delta_2, board: board };
+                return stateAfterMove_2;
+            }
+            //check for more explosions
+            //board[row]
+            if (explosionQueueCurr.length == 0) {
+                log.log("length = 0");
+                explosionQueueCurr = angular.copy(explosionQueueNext);
+                explosionQueueNext = [];
+                explosions.push(angular.copy(explosion));
+                log.log(explosions[0].cellsExploded[0]);
+                explosion.cellsExploded = [];
+                explosion.boardAfterExplosions = angular.copy(board);
+            }
+        }
+        //  explosions.push(explosion);
+        log.log(explosions[0].cellsExploded[0]);
+        var delta = { currMoveCell: currMoveCell, explosions: explosions };
+        log.log(delta.explosions[0].cellsExploded[0]);
+        var stateAfterMove = { delta: delta, board: board };
+        return stateAfterMove;
+    }
     function checkMoveOk(stateTransition) {
         // We can assume that turnIndexBeforeMove and stateBeforeMove are legal, and we need
         // to verify that the move is OK.
@@ -117,8 +218,8 @@ var gameLogic;
         var stateBeforeMove = stateTransition.stateBeforeMove;
         var move = stateTransition.move;
         var deltaValue = stateTransition.move.stateAfterMove.delta;
-        var row = deltaValue.row;
-        var col = deltaValue.col;
+        var row = deltaValue.currMoveCell.row;
+        var col = deltaValue.currMoveCell.col;
         var expectedMove = createMove(stateBeforeMove, row, col, turnIndexBeforeMove);
         if (!angular.equals(move, expectedMove)) {
             throw new Error("Expected move=" + angular.toJson(expectedMove, true) +
