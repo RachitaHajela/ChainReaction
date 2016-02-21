@@ -90,13 +90,18 @@ module gameLogic {
    * Returns if the particular player has won or not
    */
 function playerWon(playerId: number, board: Board): boolean {
-     for (let i = 0; i < ROWS; i++) {
+    let numMolecules : number = 0;
+    for (let i = 0; i < ROWS; i++) {
       for (let j = 0; j < COLS; j++) {
         let cell = board[i][j];
-        if (cell.playerId !== playerId) {
+        numMolecules += cell.numMolecules;
+        if (cell.numMolecules !== 0 && cell.playerId !== playerId) {
             return false;
         }     
       }
+    }
+    if (numMolecules < 2) {
+        return false;
     }
     return true;
 } 
@@ -129,7 +134,7 @@ function playerWon(playerId: number, board: Board): boolean {
     if (winner !== '' || isTie(boardAfterMove)) {
       // Game over.
       turnIndexAfterMove = -1;
-      endMatchScores = winner === 'X' ? [1, 0] : winner === 'O' ? [0, 1] : [0, 0];
+      endMatchScores = winner === '0' ? [1, 0] : winner === '1' ? [0, 1] : [0, 0];
     } else {
       // Game continues. Now it's the opponent's turn (the turn switches from 0 to 1 and 1 to 0).
       turnIndexAfterMove = 1 - turnIndexBeforeMove;
