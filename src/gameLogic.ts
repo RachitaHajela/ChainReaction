@@ -157,6 +157,8 @@ function playerWon(playerId: number, board: Board): boolean {
   }
   
   function updateBoard(row: number,col: number, board: Board, playerId: number): IState {
+      //TODO : handle case when no. of mol > 4
+      //TODO : update logic to show 4 molecules when game is over
       let currMoveCell: Cell = {row: row, col: col};
       let explosions: Explosion[] = [];
       if(board[row][col].numMolecules !== maxMolecules(row, col)) {

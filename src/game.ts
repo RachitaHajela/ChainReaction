@@ -18,7 +18,7 @@ module game {
     translate.setTranslations(getTranslations());
     translate.setLanguage('en');
     log.log("Translation of 'RULES_OF_TICTACTOE' is " + translate('RULES_OF_TICTACTOE'));
-    resizeGameAreaService.setWidthToHeight(1);
+    resizeGameAreaService.setWidthToHeight(0.67);
     moveService.setGame({
       minNumberOfPlayers: 2,
       maxNumberOfPlayers: 2,
@@ -128,9 +128,14 @@ module game {
 
   export function shouldShowImage(row: number, col: number): boolean {
     let cell = state.board[row][col];
-    return cell !== "";
+    return cell.playerId !== -1;
   }
 
+  export function containsMolOfPlayer(row: number, col: number, playerId: number, numMol: number): boolean {
+      return state.board[row][col].playerId === playerId && state.board[row][col].numMolecules == numMol;
+  }
+
+  /*
   export function isPieceX(row: number, col: number): boolean {
     return state.board[row][col] === 'X';
   }
@@ -138,12 +143,13 @@ module game {
   export function isPieceO(row: number, col: number): boolean {
     return state.board[row][col] === 'O';
   }
-
+  
   export function shouldSlowlyAppear(row: number, col: number): boolean {
     return !animationEnded &&
         state.delta &&
         state.delta.row === row && state.delta.col === col;
   }
+  */
 
   export function clickedOnModal(evt: Event) {
     if (evt.target === evt.currentTarget) {

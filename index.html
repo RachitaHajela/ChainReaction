@@ -21,12 +21,12 @@
 
   <!-- The crossorigin attribute controls, for scripts that are obtained from other origins, whether error information will be exposed. -->
   <!-- build:[src] http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js -->
-  <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+  <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
   <!-- /build -->
 
   <!-- For the game rules/instructions, I use carousel from Angular UI + Bootstrap -->
   <!-- build:[src] http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-touch.min.js -->
-  <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-touch.js"></script>
+  <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-touch.js"></script>
   <!-- /build -->
   <!-- build:[src] http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js -->
   <script crossorigin="anonymous" src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.js"></script>
@@ -99,6 +99,7 @@
 
 <div id="gameArea">
 
+  <!--
   <div ng-repeat="row in [0, 1, 2]"
       style="position:absolute; top:{{row * 33}}%; left:0; width:100%; height:33%;">
     <div ng-repeat="col in [0, 1, 2]"
@@ -130,6 +131,120 @@
       </div>
     </div>
   </div>
+  ng-click="game.cellClicked(row, col)"
+      ng-class="{t: row === 0, l : col === 0, b, r}"
+    
+  -->
+  <div ng-repeat="row in [0, 1, 2, 3, 4, 5]" 
+    style="position:absolute; top:{{row * 16.6}}%; left:0; width:100%; height:16.6%;">
+    <div ng-repeat="col in [0, 1, 2, 3]"
+      style="position:absolute; top:0; left:{{col * 25}}%; width:25%; height:100%;"
+      ng-class="{t: row < 1, l : col < 1}"
+      class="b r"
+      ng-click="game.cellClicked(row, col)">
+      <div style="width:100%; height: 100%"
+        ng-if="game.shouldShowImage(row, col)">
+       
+       <section ng-if="game.containsMolOfPlayer(row, col, 0, 1)" class="stage" style="position:absolute; top:25%; left:25%; width:50%;height:50%">
+        <figure class="ball_red"></figure>
+       </section> 
+       
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 1)" class="stage" style="position:absolute; top:25%; left:25%; width:50%;height:50%">
+        <figure class="ball_blue"></figure>
+       </section>
+       
+       <section ng-if="game.containsMolOfPlayer(row, col, 0, 2)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+        <figure class="ball_red"></figure>
+       </section> 
+       <section ng-if="game.containsMolOfPlayer(row, col, 0, 2)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+        <figure class="ball_red"></figure>
+       </section>
+        
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 2)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+        <figure class="ball_blue"></figure>
+       </section> 
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 2)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+        <figure class="ball_blue"></figure>
+       </section>
+        
+       <section ng-if="game.containsMolOfPlayer(row, col, 0, 3)" class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%">
+        <figure class="ball_red"></figure>
+       </section> 
+       <section ng-if="game.containsMolOfPlayer(row, col, 0, 3)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+        <figure class="ball_red"></figure>
+       </section>  
+       <section ng-if="game.containsMolOfPlayer(row, col, 0, 3)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+        <figure class="ball_red"></figure>
+       </section>
+
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 3)" class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%">
+        <figure class="ball_blue"></figure>
+       </section> 
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 3)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+        <figure class="ball_blue"></figure>
+       </section>  
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 3)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+        <figure class="ball_blue"></figure>
+       </section>
+
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 4)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+        <figure class="ball_red"></figure>
+       </section> 
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 4)" class="stage" style="position:absolute; top:40%; left:25%; width:50%;height:50%">
+        <figure class="ball_red"></figure>
+       </section> 
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 4)" class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%">
+        <figure class="ball_red"></figure>
+       </section> 
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 4)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+        <figure class="ball_red"></figure>
+       </section>
+
+       <section ng-if="game.containsMolOfPlayer(row, col, 2, 4)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+        <figure class="ball_blue"></figure>
+       </section> 
+       <section ng-if="game.containsMolOfPlayer(row, col, 2, 4)" class="stage" style="position:absolute; top:40%; left:25%; width:50%;height:50%">
+        <figure class="ball_blue"></figure>
+       </section> 
+       <section ng-if="game.containsMolOfPlayer(row, col, 2, 4)" class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%">
+        <figure class="ball_blue"></figure>
+       </section> 
+       <section ng-if="game.containsMolOfPlayer(row, col, 2, 4)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+        <figure class="ball_blue"></figure>
+       </section>
+
+      </div>
+    </div>
+   <!--
+   <div style="position:absolute; top:0; left:0%; width:25%; height:100%;"
+        class="t r b l">
+      <div  style="position:absolute; width:100%; height:100%;">
+     <section class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+        <figure class="ball"></figure>
+    </section> 
+    <section class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+        <figure class="ball"></figure>
+    </section>
+      </div>
+    </div>
+    <div style="position:absolute; top:0; left:25%; width:25%; height:100%;"
+        class="t r b">
+      <div style="width:100%; height: 100%">
+      </div>
+    </div>
+    <div style="position:absolute; top:0; left:50%; width:25%; height:100%;"
+        class="t r b">
+      <div style="width:100%; height: 100%">
+      </div>
+    </div>
+     <div style="position:absolute; top:0; left:75%; width:25%; height:100%;"
+        class="t r b">
+      <div style="width:100%; height: 100%">
+      </div>
+    </div>
+    -->
+  </div>
+  
 </div>
 
 </body>

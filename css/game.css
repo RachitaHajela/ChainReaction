@@ -14,7 +14,7 @@
   animation: slowlyAppear 0.5s linear;
 }
 
-.ball {
+.ball_blue {
   display: inline-block;
   width: 100%;
   height: 100%;
@@ -34,7 +34,7 @@
   background: radial-gradient(circle at 50% 120%, #fed5d7, #fb898d 10%, #e0080f 80%, #480205 100%);
 }
 
-.ball:before {
+.ball_blue:before {
   content: "";
   position: absolute;
   top: 1%;

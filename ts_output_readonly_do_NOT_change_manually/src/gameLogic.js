@@ -127,6 +127,8 @@ var gameLogic;
         return maxMol;
     }
     function updateBoard(row, col, board, playerId) {
+        //TODO : handle case when no. of mol > 4
+        //TODO : update logic to show 4 molecules when game is over
         var currMoveCell = { row: row, col: col };
         var explosions = [];
         if (board[row][col].numMolecules !== maxMolecules(row, col)) {

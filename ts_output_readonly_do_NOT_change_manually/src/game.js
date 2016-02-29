@@ -14,7 +14,7 @@ var game;
         translate.setTranslations(getTranslations());
         translate.setLanguage('en');
         log.log("Translation of 'RULES_OF_TICTACTOE' is " + translate('RULES_OF_TICTACTOE'));
-        resizeGameAreaService.setWidthToHeight(1);
+        resizeGameAreaService.setWidthToHeight(0.67);
         moveService.setGame({
             minNumberOfPlayers: 2,
             maxNumberOfPlayers: 2,
@@ -117,23 +117,28 @@ var game;
     game.cellClicked = cellClicked;
     function shouldShowImage(row, col) {
         var cell = game.state.board[row][col];
-        return cell !== "";
+        return cell.playerId !== -1;
     }
     game.shouldShowImage = shouldShowImage;
-    function isPieceX(row, col) {
-        return game.state.board[row][col] === 'X';
+    function containsMolOfPlayer(row, col, playerId, numMol) {
+        return game.state.board[row][col].playerId === playerId && game.state.board[row][col].numMolecules == numMol;
     }
-    game.isPieceX = isPieceX;
-    function isPieceO(row, col) {
-        return game.state.board[row][col] === 'O';
+    game.containsMolOfPlayer = containsMolOfPlayer;
+    /*
+    export function isPieceX(row: number, col: number): boolean {
+      return state.board[row][col] === 'X';
     }
-    game.isPieceO = isPieceO;
-    function shouldSlowlyAppear(row, col) {
-        return !game.animationEnded &&
-            game.state.delta &&
-            game.state.delta.row === row && game.state.delta.col === col;
+  
+    export function isPieceO(row: number, col: number): boolean {
+      return state.board[row][col] === 'O';
     }
-    game.shouldSlowlyAppear = shouldSlowlyAppear;
+    
+    export function shouldSlowlyAppear(row: number, col: number): boolean {
+      return !animationEnded &&
+          state.delta &&
+          state.delta.row === row && state.delta.col === col;
+    }
+    */
     function clickedOnModal(evt) {
         if (evt.target === evt.currentTarget) {
             evt.preventDefault();
