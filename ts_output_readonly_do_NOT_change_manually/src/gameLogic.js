@@ -139,7 +139,7 @@ var gameLogic;
             try {
                 board[currCell.row - 1][currCell.col].playerId = playerId;
                 board[currCell.row - 1][currCell.col].numMolecules++;
-                if (board[currCell.row - 1][currCell.col].numMolecules >= maxMolecules(row - 1, col)) {
+                if (board[currCell.row - 1][currCell.col].numMolecules === maxMolecules(row - 1, col)) {
                     var newCell = { row: row - 1, col: col };
                     explosionQueueNext.push(newCell);
                 }
@@ -149,7 +149,7 @@ var gameLogic;
             try {
                 board[currCell.row + 1][currCell.col].playerId = playerId;
                 board[currCell.row + 1][currCell.col].numMolecules++;
-                if (board[currCell.row + 1][currCell.col].numMolecules >= maxMolecules(row + 1, col)) {
+                if (board[currCell.row + 1][currCell.col].numMolecules === maxMolecules(row + 1, col)) {
                     var newCell = { row: row + 1, col: col };
                     explosionQueueNext.push(newCell);
                 }
@@ -159,7 +159,7 @@ var gameLogic;
             try {
                 board[currCell.row][currCell.col - 1].playerId = playerId;
                 board[currCell.row][currCell.col - 1].numMolecules++;
-                if (board[currCell.row][currCell.col - 1].numMolecules >= maxMolecules(row, col - 1)) {
+                if (board[currCell.row][currCell.col - 1].numMolecules === maxMolecules(row, col - 1)) {
                     var newCell = { row: row, col: col - 1 };
                     explosionQueueNext.push(newCell);
                 }
@@ -169,7 +169,7 @@ var gameLogic;
             try {
                 board[currCell.row][currCell.col + 1].playerId = playerId;
                 board[currCell.row][currCell.col + 1].numMolecules++;
-                if (board[currCell.row][currCell.col + 1].numMolecules >= maxMolecules(row, col + 1)) {
+                if (board[currCell.row][currCell.col + 1].numMolecules === maxMolecules(row, col + 1)) {
                     var newCell = { row: row, col: col + 1 };
                     explosionQueueNext.push(newCell);
                 }

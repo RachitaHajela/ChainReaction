@@ -169,7 +169,7 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row-1][currCell.col].playerId = playerId;
             board[currCell.row-1][currCell.col].numMolecules++;
-            if (board[currCell.row-1][currCell.col].numMolecules >= maxMolecules(row-1, col)) {
+            if (board[currCell.row-1][currCell.col].numMolecules === maxMolecules(row-1, col)) {
                 let newCell : Cell = {row: row-1, col : col};
                 explosionQueueNext.push(newCell);
             }
@@ -179,7 +179,7 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row+1][currCell.col].playerId = playerId;
             board[currCell.row+1][currCell.col].numMolecules++;
-            if (board[currCell.row+1][currCell.col].numMolecules >= maxMolecules(row+1, col)) {
+            if (board[currCell.row+1][currCell.col].numMolecules === maxMolecules(row+1, col)) {
                 let newCell : Cell = {row: row+1, col : col};
                 explosionQueueNext.push(newCell);
             }
@@ -189,7 +189,7 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row][currCell.col-1].playerId = playerId;
             board[currCell.row][currCell.col-1].numMolecules++;
-            if (board[currCell.row][currCell.col-1].numMolecules >= maxMolecules(row, col-1)) {
+            if (board[currCell.row][currCell.col-1].numMolecules === maxMolecules(row, col-1)) {
                 let newCell : Cell = {row: row, col : col-1};
                 explosionQueueNext.push(newCell);
             }
@@ -199,7 +199,7 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row][currCell.col+1].playerId = playerId;
             board[currCell.row][currCell.col+1].numMolecules++;
-            if (board[currCell.row][currCell.col+1].numMolecules >= maxMolecules(row, col+1)) {
+            if (board[currCell.row][currCell.col+1].numMolecules === maxMolecules(row, col+1)) {
                 let newCell : Cell = {row: row, col : col+1};
                 explosionQueueNext.push(newCell);
             }
