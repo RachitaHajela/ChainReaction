@@ -52,7 +52,7 @@ module game {
         iw: "אתה והיריב מסמנים איקס או עיגול כל תור",
       },
       RULES_SLIDE2: {
-        en: "A cell explodes and occupies the neighbouring cells if the number of balls in it becomes equal to the number of borders it has",
+        en: "A cell explodes and occupies the neighboring cells if the number of balls in it becomes equal to the number of neighbors it has",
         iw: "הראשון שמסמן שורה, עמודה או אלכסון מנצח",
       },
       RULES_SLIDE3: {

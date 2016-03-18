@@ -16,8 +16,6 @@ interface Explosion {
 
 type Board = CellState[][]
 interface BoardDelta {
-  //row: number;
-  //col: number;
   currMoveCell: Cell;
   explosions: Explosion[];
 }
@@ -36,8 +34,6 @@ module gameLogic {
     for (let i = 0; i < ROWS; i++) {
       board[i] = [];
       for (let j = 0; j < COLS; j++) {
-        //board[i][j].playerId = -1;
-        //board[i][j].numMolecules = 0
         board[i][j] = {playerId: -1, numMolecules: 0};
       }
     }
@@ -56,15 +52,6 @@ module gameLogic {
    *      ['O', 'X', 'X']]
    */
   function isTie(board: Board): boolean {
-    // for (let i = 0; i < ROWS; i++) {
-    //   for (let j = 0; j < COLS; j++) {
-    //     if (board[i][j] === '') {
-    //       // If there is an empty cell then we do not have a tie.
-    //       return false;
-    //     }
-    //   }
-    // }
-    // No empty cells, so we have a tie!
     return false;
   }
 
@@ -140,8 +127,6 @@ function playerWon(playerId: number, board: Board): boolean {
       turnIndexAfterMove = 1 - turnIndexBeforeMove;
       endMatchScores = null;
     }
-  //  let delta: BoardDelta = {row: row, col: col};
-   // let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
     return {endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove};
   }
   
@@ -161,7 +146,7 @@ function playerWon(playerId: number, board: Board): boolean {
       //TODO : update logic to show 4 molecules when game is over
       let currMoveCell: Cell = {row: row, col: col};
       let explosions: Explosion[] = [];
-      if(board[row][col].numMolecules !== maxMolecules(row, col)) {
+      if(board[row][col].numMolecules < maxMolecules(row, col)) {
           log.log("no explosion -- if");
           let delta: BoardDelta = {currMoveCell: currMoveCell,explosions: explosions};
           let stateAfterMove: IState = {delta: delta, board: board};
@@ -170,21 +155,21 @@ function playerWon(playerId: number, board: Board): boolean {
       let explosionQueueCurr: Cell[] = [currMoveCell];
       let explosionQueueNext: Cell[] = [];
       let explosion: Explosion = {cellsExploded : [], boardAfterExplosions : board};
-      //let explosion: Explosion;
-      //explosion.boardAfterExplosions = board
       while (explosionQueueCurr.length > 0) {
           log.log("while");
           //boardchange and add in delta
           let currCell: Cell = angular.copy(explosionQueueCurr[0]);
           explosionQueueCurr.splice(0, 1);
           
-          board[currCell.row][currCell.col].playerId = -1;
-          board[currCell.row][currCell.col].numMolecules = 0;
+          board[currCell.row][currCell.col].numMolecules = board[currCell.row][currCell.col].numMolecules - maxMolecules(currCell.row, currCell.col);
+          if (board[currCell.row][currCell.col].numMolecules === 0) {
+            board[currCell.row][currCell.col].playerId = -1;
+          }
           
           try {
             board[currCell.row-1][currCell.col].playerId = playerId;
             board[currCell.row-1][currCell.col].numMolecules++;
-            if (board[currCell.row-1][currCell.col].numMolecules === maxMolecules(row-1, col)) {
+            if (board[currCell.row-1][currCell.col].numMolecules >= maxMolecules(row-1, col)) {
                 let newCell : Cell = {row: row-1, col : col};
                 explosionQueueNext.push(newCell);
             }
@@ -194,7 +179,7 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row+1][currCell.col].playerId = playerId;
             board[currCell.row+1][currCell.col].numMolecules++;
-            if (board[currCell.row+1][currCell.col].numMolecules === maxMolecules(row+1, col)) {
+            if (board[currCell.row+1][currCell.col].numMolecules >= maxMolecules(row+1, col)) {
                 let newCell : Cell = {row: row+1, col : col};
                 explosionQueueNext.push(newCell);
             }
@@ -204,7 +189,7 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row][currCell.col-1].playerId = playerId;
             board[currCell.row][currCell.col-1].numMolecules++;
-            if (board[currCell.row][currCell.col-1].numMolecules === maxMolecules(row, col-1)) {
+            if (board[currCell.row][currCell.col-1].numMolecules >= maxMolecules(row, col-1)) {
                 let newCell : Cell = {row: row, col : col-1};
                 explosionQueueNext.push(newCell);
             }
@@ -214,7 +199,7 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row][currCell.col+1].playerId = playerId;
             board[currCell.row][currCell.col+1].numMolecules++;
-            if (board[currCell.row][currCell.col+1].numMolecules === maxMolecules(row, col+1)) {
+            if (board[currCell.row][currCell.col+1].numMolecules >= maxMolecules(row, col+1)) {
                 let newCell : Cell = {row: row, col : col+1};
                 explosionQueueNext.push(newCell);
             }
