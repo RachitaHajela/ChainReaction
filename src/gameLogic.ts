@@ -208,6 +208,7 @@ function playerWon(playerId: number, board: Board): boolean {
           }
           
           explosion.cellsExploded.push(currCell);
+          log.log("Cells exploded")
           log.log(explosion.cellsExploded[0])
           explosion.boardAfterExplosions = angular.copy(board);
 
@@ -233,6 +234,7 @@ function playerWon(playerId: number, board: Board): boolean {
           }
       } 
     //  explosions.push(explosion);
+      log.log("expl0 cells exploded")
       log.log(explosions[0].cellsExploded[0])
       let delta: BoardDelta = {currMoveCell: currMoveCell, explosions: explosions};
       log.log(delta.explosions[0].cellsExploded[0])
