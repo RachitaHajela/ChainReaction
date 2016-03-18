@@ -17,7 +17,7 @@ module game {
   export function init() {
     translate.setTranslations(getTranslations());
     translate.setLanguage('en');
-    log.log("Translation of 'RULES_OF_TICTACTOE' is " + translate('RULES_OF_TICTACTOE'));
+    log.log("Translation of 'RULES_OF_CHAINREACTION' is " + translate('RULES_OF_CHAINREACTION'));
     resizeGameAreaService.setWidthToHeight(0.67);
     moveService.setGame({
       minNumberOfPlayers: 2,
@@ -43,16 +43,20 @@ module game {
 
   function getTranslations(): Translations {
     return {
-      RULES_OF_TICTACTOE: {
+      RULES_OF_CHAINREACTION: {
         en: "Rules of Chain Reaction",
         iw: "חוקי המשחק",
       },
       RULES_SLIDE1: {
-        en: "You and your opponent take turns to mark the grid in an empty spot. The first mark is X, then O, then X, then O, etc.",
+        en: "You and your opponent take turns to occupy the cells by putting their balls in them. A ball can be put in an empty cell or a cell already occupied by you",
         iw: "אתה והיריב מסמנים איקס או עיגול כל תור",
       },
       RULES_SLIDE2: {
-        en: "The first to mark a whole row, column or diagonal wins.",
+        en: "A cell explodes and occupies the neighbouring cells if the number of balls in it becomes equal to the number of borders it has",
+        iw: "הראשון שמסמן שורה, עמודה או אלכסון מנצח",
+      },
+      RULES_SLIDE3: {
+        en: "The player who wipes out the other player's occupied cells wins.",
         iw: "הראשון שמסמן שורה, עמודה או אלכסון מנצח",
       },
       CLOSE:  {
