@@ -161,10 +161,22 @@ function playerWon(playerId: number, board: Board): boolean {
           let currCell: Cell = angular.copy(explosionQueueCurr[0]);
           explosionQueueCurr.splice(0, 1);
           
+          log.log("Curr cell ")
+          log.log(currCell.row)
+          log.log(currCell.col)
+          
+          log.log("Curr cell initial : molecules, playerId")
+          log.log(board[currCell.row][currCell.col].numMolecules)
+          log.log(board[currCell.row][currCell.col].playerId)
+
           board[currCell.row][currCell.col].numMolecules = board[currCell.row][currCell.col].numMolecules - maxMolecules(currCell.row, currCell.col);
           if (board[currCell.row][currCell.col].numMolecules === 0) {
             board[currCell.row][currCell.col].playerId = -1;
           }
+          
+          log.log("Curr cell final : molecules, playerId")
+          log.log(board[currCell.row][currCell.col].numMolecules)
+          log.log(board[currCell.row][currCell.col].playerId)
           
           try {
             board[currCell.row-1][currCell.col].playerId = playerId;
@@ -173,6 +185,7 @@ function playerWon(playerId: number, board: Board): boolean {
                 let newCell : Cell = {row: row-1, col : col};
                 explosionQueueNext.push(newCell);
             }
+            log.log("try 1")
           } catch (err) {
               
           }
@@ -183,6 +196,7 @@ function playerWon(playerId: number, board: Board): boolean {
                 let newCell : Cell = {row: row+1, col : col};
                 explosionQueueNext.push(newCell);
             }
+            log.log("try 2")
           } catch (err) {
               
           }
@@ -193,6 +207,7 @@ function playerWon(playerId: number, board: Board): boolean {
                 let newCell : Cell = {row: row, col : col-1};
                 explosionQueueNext.push(newCell);
             }
+            log.log("try 3")
           } catch (err) {
               
           }
@@ -203,13 +218,14 @@ function playerWon(playerId: number, board: Board): boolean {
                 let newCell : Cell = {row: row, col : col+1};
                 explosionQueueNext.push(newCell);
             }
+            log.log("try 4")
           } catch (err) {
               
           }
           
           explosion.cellsExploded.push(currCell);
           log.log("Cells exploded")
-          log.log(explosion.cellsExploded[0])
+          log.log(explosion.cellsExploded)
           explosion.boardAfterExplosions = angular.copy(board);
 
           //check for winner
@@ -228,16 +244,16 @@ function playerWon(playerId: number, board: Board): boolean {
               explosionQueueCurr = angular.copy(explosionQueueNext);
               explosionQueueNext = [];
               explosions.push(angular.copy(explosion));
-              log.log(explosions[0].cellsExploded[0])
+              //log.log(explosions[0].cellsExploded[0])
               explosion.cellsExploded = [];
               explosion.boardAfterExplosions = angular.copy(board);
           }
       } 
     //  explosions.push(explosion);
-      log.log("expl0 cells exploded")
-      log.log(explosions[0].cellsExploded[0])
+      //log.log("expl0 cells exploded")
+      //log.log(explosions[0].cellsExploded[0])
       let delta: BoardDelta = {currMoveCell: currMoveCell, explosions: explosions};
-      log.log(delta.explosions[0].cellsExploded[0])
+      //log.log(delta.explosions[0].cellsExploded[0])
       let stateAfterMove: IState = {delta: delta, board: board};
       return stateAfterMove;
       
