@@ -181,8 +181,8 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row-1][currCell.col].playerId = playerId;
             board[currCell.row-1][currCell.col].numMolecules++;
-            if (board[currCell.row-1][currCell.col].numMolecules >= maxMolecules(row-1, col)) {
-                let newCell : Cell = {row: row-1, col : col};
+            if (board[currCell.row-1][currCell.col].numMolecules >= maxMolecules(currCell.row-1, currCell.col)) {
+                let newCell : Cell = {row: currCell.row-1, col : currCell.col};
                 explosionQueueNext.push(newCell);
             }
             log.log("try 1")
@@ -192,8 +192,8 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row+1][currCell.col].playerId = playerId;
             board[currCell.row+1][currCell.col].numMolecules++;
-            if (board[currCell.row+1][currCell.col].numMolecules >= maxMolecules(row+1, col)) {
-                let newCell : Cell = {row: row+1, col : col};
+            if (board[currCell.row+1][currCell.col].numMolecules >= maxMolecules(currCell.row+1, currCell.col)) {
+                let newCell : Cell = {row: currCell.row+1, col : currCell.col};
                 explosionQueueNext.push(newCell);
             }
             log.log("try 2")
@@ -203,8 +203,8 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row][currCell.col-1].playerId = playerId;
             board[currCell.row][currCell.col-1].numMolecules++;
-            if (board[currCell.row][currCell.col-1].numMolecules >= maxMolecules(row, col-1)) {
-                let newCell : Cell = {row: row, col : col-1};
+            if (board[currCell.row][currCell.col-1].numMolecules >= maxMolecules(currCell.row, currCell.col-1)) {
+                let newCell : Cell = {row: currCell.row, col : currCell.col-1};
                 explosionQueueNext.push(newCell);
             }
             log.log("try 3")
@@ -214,8 +214,8 @@ function playerWon(playerId: number, board: Board): boolean {
           try {
             board[currCell.row][currCell.col+1].playerId = playerId;
             board[currCell.row][currCell.col+1].numMolecules++;
-            if (board[currCell.row][currCell.col+1].numMolecules >= maxMolecules(row, col+1)) {
-                let newCell : Cell = {row: row, col : col+1};
+            if (board[currCell.row][currCell.col+1].numMolecules >= maxMolecules(currCell.row, currCell.col+1)) {
+                let newCell : Cell = {row: currCell.row, col : currCell.col+1};
                 explosionQueueNext.push(newCell);
             }
             log.log("try 4")
