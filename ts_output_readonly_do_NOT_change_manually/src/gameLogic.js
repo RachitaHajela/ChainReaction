@@ -148,7 +148,7 @@ var gameLogic;
             try {
                 board[currCell.row - 1][currCell.col].playerId = playerId;
                 board[currCell.row - 1][currCell.col].numMolecules++;
-                if (board[currCell.row - 1][currCell.col].numMolecules >= maxMolecules(currCell.row - 1, currCell.col)) {
+                if (board[currCell.row - 1][currCell.col].numMolecules === maxMolecules(currCell.row - 1, currCell.col)) {
                     var newCell = { row: currCell.row - 1, col: currCell.col };
                     explosionQueueNext.push(newCell);
                 }
@@ -159,7 +159,7 @@ var gameLogic;
             try {
                 board[currCell.row + 1][currCell.col].playerId = playerId;
                 board[currCell.row + 1][currCell.col].numMolecules++;
-                if (board[currCell.row + 1][currCell.col].numMolecules >= maxMolecules(currCell.row + 1, currCell.col)) {
+                if (board[currCell.row + 1][currCell.col].numMolecules === maxMolecules(currCell.row + 1, currCell.col)) {
                     var newCell = { row: currCell.row + 1, col: currCell.col };
                     explosionQueueNext.push(newCell);
                 }
@@ -170,7 +170,7 @@ var gameLogic;
             try {
                 board[currCell.row][currCell.col - 1].playerId = playerId;
                 board[currCell.row][currCell.col - 1].numMolecules++;
-                if (board[currCell.row][currCell.col - 1].numMolecules >= maxMolecules(currCell.row, currCell.col - 1)) {
+                if (board[currCell.row][currCell.col - 1].numMolecules === maxMolecules(currCell.row, currCell.col - 1)) {
                     var newCell = { row: currCell.row, col: currCell.col - 1 };
                     explosionQueueNext.push(newCell);
                 }
@@ -181,7 +181,7 @@ var gameLogic;
             try {
                 board[currCell.row][currCell.col + 1].playerId = playerId;
                 board[currCell.row][currCell.col + 1].numMolecules++;
-                if (board[currCell.row][currCell.col + 1].numMolecules >= maxMolecules(currCell.row, currCell.col + 1)) {
+                if (board[currCell.row][currCell.col + 1].numMolecules === maxMolecules(currCell.row, currCell.col + 1)) {
                     var newCell = { row: currCell.row, col: currCell.col + 1 };
                     explosionQueueNext.push(newCell);
                 }
