@@ -13,7 +13,18 @@
 .slowlyAppear {
   animation: slowlyAppear 0.5s linear;
 }
-
+.moveRight {
+  animation: moveRight 0.5s ease-out;
+}
+.moveLeft {
+  animation: moveLeft 0.5s ease-out;
+}
+.moveUp {
+  animation: moveUp 0.5s ease-out;
+}
+.moveDown {
+  animation: moveDown 0.5s ease-out;
+}
 .ball_blue {
   display: inline-block;
   width: 100%;
@@ -33,7 +44,6 @@
   position: relative;
   background: radial-gradient(circle at 50% 120%, #fed5d7, #fb898d 10%, #e0080f 80%, #480205 100%);
 }
-
 .ball_blue:before {
   content: "";
   position: absolute;
@@ -78,7 +88,22 @@
   from {opacity: 0.1;}
   to {opacity: 1;}
 }
-
+@keyframes moveLeft {
+  from {position:absolute; top:25%; left:10%; width:50%;height:50%}
+  to {position:absolute; top:25%; left:-90%;  width:50%;height:50%}
+}
+@keyframes moveUp {
+  from {position:absolute; top:10%; left:25%; width:50%;height:50%}
+  to {position:absolute; top:-90%; left:25%;  width:50%;height:50%}
+}
+@keyframes moveRight {
+  from {position:absolute; top:25%; left:40%;  width:50%;height:50%}
+  to {position:absolute; top:25%; left:140%;  width:50%;height:50%}
+}
+@keyframes moveDown {
+  from {position:absolute; top:40%; left:25%;  width:50%;height:50%}
+  to {position:absolute; top:140%; left:25%;  width:50%;height:50%}
+}
 td {
   padding:0 5px 0 5px;
 }
