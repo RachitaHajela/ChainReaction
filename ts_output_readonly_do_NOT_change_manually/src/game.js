@@ -73,20 +73,10 @@ var game;
         game.isComputerTurn = false; // to make sure the computer can only move once.
         moveService.makeMove(aiService.findComputerMove(game.move));
     }
-    game.round = 1;
+    game.round = 0;
     var intervalFuture = null;
-    var maxRound = 24;
+    var maxRound = 4;
     function updateUI(params) {
-        if (intervalFuture) {
-            $interval.cancel(intervalFuture);
-        }
-        game.round = 0;
-        intervalFuture = $interval(function () {
-            game.round++;
-            if (game.round == maxRound) {
-                $interval.cancel(intervalFuture);
-            }
-        }, 1000);
         log.info("Game got updateUI:", params);
         game.animationEnded = false;
         game.move = params.move;
@@ -112,6 +102,16 @@ var game;
                 sendComputerMove();
             }
         }
+        if (intervalFuture) {
+            $interval.cancel(intervalFuture);
+        }
+        game.round = 0;
+        intervalFuture = $interval(function () {
+            game.round++;
+            if (game.round == maxRound) {
+                $interval.cancel(intervalFuture);
+            }
+        }, 1000);
     }
     function cellClicked(row, col) {
         log.info("Clicked on cell:", row, col);
@@ -161,7 +161,7 @@ var game;
     game.shouldSlowlyAppear = shouldSlowlyAppear;
     function contains(cells, row, col) {
         log.info("shouldAnimate -- contains");
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < cells.length; i++) {
             if (cells[i].row === row && cells[i].col === col) {
                 //log.info("shouldAnimate")
                 log.info("true");
@@ -172,11 +172,13 @@ var game;
         return false;
     }
     function shouldAnimate(row, col, round) {
+        log.info("shouldAnimate --round and  explosions length:", round, game.state.delta.explosions.length);
         if (round >= game.state.delta.explosions.length) {
             log.info("shouldAnimate -- if");
             log.info("false");
             return false;
         }
+        log.info("shouldAnimate -- outside if");
         return contains(game.state.delta.explosions[round].cellsExploded, row, col);
     }
     game.shouldAnimate = shouldAnimate;

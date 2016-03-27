@@ -177,10 +177,14 @@
         <figure class="ball_red"></figure>
        </section>
         
-       <section ng-if="game.containsMolOfPlayer(row, col, 1, 2)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 2)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%"
+         ng-class="{moveUp: game.shouldAnimate(row, col, game.round) && row==5}"
+         ng-class="{moveDown: game.shouldAnimate(row, col, game.round) && row==0}">
         <figure class="ball_blue"></figure>
        </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, 1, 2)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+       <section ng-if="game.containsMolOfPlayer(row, col, 1, 2)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%"
+         ng-class="{moveLeft: game.shouldAnimate(row, col, game.round) && col==0}"
+         ng-class="{moveRight: game.shouldAnimate(row, col, game.round) && col==3}">
         <figure class="ball_blue"></figure>
        </section>
         

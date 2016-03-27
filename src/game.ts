@@ -82,21 +82,11 @@ module game {
     moveService.makeMove(aiService.findComputerMove(move));
   }
 
-  export let round: number = 1;
+  export let round: number = 0;
   let intervalFuture: ng.IPromise<any> = null;
-  let maxRound: number = 24;
+  let maxRound: number = 4;
   
   function updateUI(params: IUpdateUI): void {
-    if (intervalFuture) {
-      $interval.cancel(intervalFuture);
-    }
-    round = 0;
-    intervalFuture = $interval(() => {
-      round++;
-      if (round == maxRound) {
-        $interval.cancel(intervalFuture);
-      }
-    }, 1000);
     
     log.info("Game got updateUI:", params);
     animationEnded = false;
@@ -124,6 +114,16 @@ module game {
         sendComputerMove();
       }
     }
+    if (intervalFuture) {
+      $interval.cancel(intervalFuture);
+    }
+    round = 0;
+     intervalFuture = $interval(() => {
+      round++;
+      if (round == maxRound) {
+        $interval.cancel(intervalFuture);
+      }
+    }, 1000);
   }
   
 
@@ -176,7 +176,7 @@ module game {
   
   function contains(cells: Cell[], row: number, col: number): boolean {
         log.info("shouldAnimate -- contains")
-      for (let i=0; i<10; i++) {
+      for (let i=0; i<cells.length; i++) {
           if (cells[i].row === row && cells[i].col === col) {
               //log.info("shouldAnimate")
               log.info("true")
@@ -188,11 +188,13 @@ module game {
   }
   
   export function shouldAnimate(row: number, col: number, round: number): boolean {
+    log.info("shouldAnimate --round and  explosions length:",round,state.delta.explosions.length);
     if (round >= state.delta.explosions.length) {
         log.info("shouldAnimate -- if")
         log.info("false")
         return false;
     }
+    log.info("shouldAnimate -- outside if")
     return contains(state.delta.explosions[round].cellsExploded, row, col);
   }
 
