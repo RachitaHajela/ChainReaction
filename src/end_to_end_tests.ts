@@ -85,6 +85,7 @@ describe('TicTacToe', function() {
     expectPieceKindDisplayed(row, col, 'O', expectedPieceKind === "O");
   }
 
+  /*
   function expectBoard(board: Board) {
     // Careful: one can't use gameLogic.ROWS/COLS (instead of 3) because gameLogic is not defined
     // in end-to-end tests.
@@ -94,7 +95,8 @@ describe('TicTacToe', function() {
       }
     }
   }
-
+  */
+  
   function clickDivAndExpectPiece(row: number, col: number, expectedPieceKind: string): void {
     element(by.id('e2e_test_div_' + row + 'x' + col)).click();
     expectPiece(row, col, expectedPieceKind);
@@ -104,6 +106,7 @@ describe('TicTacToe', function() {
     expect(browser.getTitle()).toEqual('TicTacToe');
   });
 
+  /*
   it('should have an empty TicTacToe board', function () {
     expectBoard(
         [['', '', ''],
@@ -169,4 +172,5 @@ describe('TicTacToe', function() {
     browser.sleep(2000); // wait for AI to make at least one move
     expectPiece(0, 0, 'X');
   });
+  */
 });

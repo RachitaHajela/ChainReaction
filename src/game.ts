@@ -82,7 +82,22 @@ module game {
     moveService.makeMove(aiService.findComputerMove(move));
   }
 
+  export let round: number = 1;
+  let intervalFuture: ng.IPromise<any> = null;
+  let maxRound: number = 24;
+  
   function updateUI(params: IUpdateUI): void {
+    if (intervalFuture) {
+      $interval.cancel(intervalFuture);
+    }
+    round = 0;
+    intervalFuture = $interval(() => {
+      round++;
+      if (round == maxRound) {
+        $interval.cancel(intervalFuture);
+      }
+    }, 1000);
+    
     log.info("Game got updateUI:", params);
     animationEnded = false;
     move = params.move;
@@ -110,6 +125,7 @@ module game {
       }
     }
   }
+  
 
   export function cellClicked(row: number, col: number): void {
     log.info("Clicked on cell:", row, col);
@@ -147,13 +163,38 @@ module game {
   export function isPieceO(row: number, col: number): boolean {
     return state.board[row][col] === 'O';
   }
+  */
   
-  export function shouldSlowlyAppear(row: number, col: number): boolean {
+  export function shouldSlowlyAppear(row: number, col: number, round: number): boolean {
+    /*
     return !animationEnded &&
         state.delta &&
         state.delta.row === row && state.delta.col === col;
+    */
+    return true;
   }
-  */
+  
+  function contains(cells: Cell[], row: number, col: number): boolean {
+        log.info("shouldAnimate -- contains")
+      for (let i=0; i<10; i++) {
+          if (cells[i].row === row && cells[i].col === col) {
+              //log.info("shouldAnimate")
+              log.info("true")
+              return true;
+          }
+      }
+        log.info("false")
+      return false;
+  }
+  
+  export function shouldAnimate(row: number, col: number, round: number): boolean {
+    if (round >= state.delta.explosions.length) {
+        log.info("shouldAnimate -- if")
+        log.info("false")
+        return false;
+    }
+    return contains(state.delta.explosions[round].cellsExploded, row, col);
+  }
 
   export function clickedOnModal(evt: Event) {
     if (evt.target === evt.currentTarget) {

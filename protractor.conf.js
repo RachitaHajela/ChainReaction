@@ -15,6 +15,7 @@ exports.config = {
     },
   }],
   baseUrl: 'http://localhost:9000/',
+  //baseUrl: 'http://127.0.0.1:4444/wd/hub',
   framework: 'jasmine',
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000

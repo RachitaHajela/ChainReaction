@@ -73,7 +73,20 @@ var game;
         game.isComputerTurn = false; // to make sure the computer can only move once.
         moveService.makeMove(aiService.findComputerMove(game.move));
     }
+    game.round = 1;
+    var intervalFuture = null;
+    var maxRound = 24;
     function updateUI(params) {
+        if (intervalFuture) {
+            $interval.cancel(intervalFuture);
+        }
+        game.round = 0;
+        intervalFuture = $interval(function () {
+            game.round++;
+            if (game.round == maxRound) {
+                $interval.cancel(intervalFuture);
+            }
+        }, 1000);
         log.info("Game got updateUI:", params);
         game.animationEnded = false;
         game.move = params.move;
@@ -136,13 +149,37 @@ var game;
     export function isPieceO(row: number, col: number): boolean {
       return state.board[row][col] === 'O';
     }
-    
-    export function shouldSlowlyAppear(row: number, col: number): boolean {
-      return !animationEnded &&
-          state.delta &&
-          state.delta.row === row && state.delta.col === col;
-    }
     */
+    function shouldSlowlyAppear(row, col, round) {
+        /*
+        return !animationEnded &&
+            state.delta &&
+            state.delta.row === row && state.delta.col === col;
+        */
+        return true;
+    }
+    game.shouldSlowlyAppear = shouldSlowlyAppear;
+    function contains(cells, row, col) {
+        log.info("shouldAnimate -- contains");
+        for (var i = 0; i < 10; i++) {
+            if (cells[i].row === row && cells[i].col === col) {
+                //log.info("shouldAnimate")
+                log.info("true");
+                return true;
+            }
+        }
+        log.info("false");
+        return false;
+    }
+    function shouldAnimate(row, col, round) {
+        if (round >= game.state.delta.explosions.length) {
+            log.info("shouldAnimate -- if");
+            log.info("false");
+            return false;
+        }
+        return contains(game.state.delta.explosions[round].cellsExploded, row, col);
+    }
+    game.shouldAnimate = shouldAnimate;
     function clickedOnModal(evt) {
         if (evt.target === evt.currentTarget) {
             evt.preventDefault();
