@@ -115,237 +115,289 @@ describe("In ChainReaction", function () {
         }
         return board;
     }
-    it("test1 : placing player 1 chip in 0x0 from initial state is legal", function () {
-        expectMove(LEGAL, PLAYER1_TURN, null, 0, 0, [], createBoard([
+    /*
+    it ("test1 : placing player 1 chip in 0x0 from initial state is legal", function() {
+      expectMove(LEGAL, PLAYER1_TURN, null, 0, 0, [],
+        createBoard([
             [1, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
-            [0, 0, 0, 0]]), PLAYER2_TURN, NO_ONE_WINS);
+            [0, 0, 0, 0]]), PLAYER2_TURN, NO_ONE_WINS)
     });
-    it("test2 : placing player 1 chip in 1x1 already containing one player 1's chip is legal", function () {
-        expectMove(LEGAL, PLAYER1_TURN, createBoard([
+    
+    it ("test2 : placing player 1 chip in 1x1 already containing one player 1's chip is legal", function() {
+      expectMove(LEGAL, PLAYER1_TURN,
+        createBoard([
             [0, 0, 0, 0],
             [0, 1, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, -1, 0],
-            [0, 0, 0, 0]]), 1, 1, [], createBoard([
+            [0, 0, 0, 0]]),
+        1, 1, [],
+        createBoard([
             [0, 0, 0, 0],
             [0, 2, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, -1, 0],
-            [0, 0, 0, 0]]), PLAYER2_TURN, NO_ONE_WINS);
+            [0, 0, 0, 0]]),
+        PLAYER2_TURN, NO_ONE_WINS)
     });
-    it("test3 : placing player 2 chip in 1x1 already containing one player 1's chip is illegal", function () {
-        expectMove(ILLEGAL, PLAYER2_TURN, createBoard([[0, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]), 1, 1, [], null, PLAYER1_TURN, NO_ONE_WINS);
+  
+    it ("test3 : placing player 2 chip in 1x1 already containing one player 1's chip is illegal", function() {
+      expectMove(ILLEGAL, PLAYER2_TURN,
+        createBoard([[0, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]),
+        1, 1, [],
+        null, PLAYER1_TURN, NO_ONE_WINS)
     });
-    it("test4 : placing player 1 chip in 1x1 and setting turn to yourself is illegal", function () {
-        expectMove(ILLEGAL, PLAYER1_TURN, createBoard([
+  
+    it ("test4 : placing player 1 chip in 1x1 and setting turn to yourself is illegal", function() {
+      expectMove(ILLEGAL, PLAYER1_TURN,
+        createBoard([
             [0, 0, 0, 0],
             [0, 1, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
-            [0, 0, 0, 0]]), 1, 1, [], createBoard([[0, 0, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]), PLAYER1_TURN, NO_ONE_WINS);
+            [0, 0, 0, 0]]),
+        1, 1, [],
+        createBoard([[0, 0, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]),
+        PLAYER1_TURN, NO_ONE_WINS)
     });
-    it("test5 : placing player 2 chip in 2x2 already containing one player 2's 3 chips (explosion) is legal", function () {
-        var cell = { row: 2, col: 2 };
-        var explosion = { cellsExploded: [cell], boardAfterExplosions: createBoard([
-                [0, 0, 0, 0],
-                [0, 0, -1, 0],
-                [0, -1, 0, -1],
-                [0, 0, -1, 0],
-                [2, 0, 0, 0],
-                [0, 0, 0, 0]]) };
-        expectMove(LEGAL, PLAYER2_TURN, createBoard([
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, -3, 0],
-            [0, 0, 0, 0],
-            [2, 0, 0, 0],
-            [0, 0, 0, 0]]), 2, 2, [explosion], createBoard([
+    
+    it ("test5 : placing player 2 chip in 2x2 already containing one player 2's 3 chips (explosion) is legal", function() {
+      let cell : Cell = {row : 2, col : 2};
+      let explosion : Explosion = {cellsExploded : [cell], boardAfterExplosions: createBoard([
             [0, 0, 0, 0],
             [0, 0, -1, 0],
             [0, -1, 0, -1],
             [0, 0, -1, 0],
             [2, 0, 0, 0],
-            [0, 0, 0, 0]]), PLAYER1_TURN, NO_ONE_WINS);
+            [0, 0, 0, 0]])}
+      expectMove(LEGAL, PLAYER2_TURN,
+        createBoard([
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, -3, 0],
+            [0, 0, 0, 0],
+            [2, 0, 0, 0],
+            [0, 0, 0, 0]]),
+        2, 2, [explosion],
+        createBoard([
+            [0, 0, 0, 0],
+            [0, 0, -1, 0],
+            [0, -1, 0, -1],
+            [0, 0, -1, 0],
+            [2, 0, 0, 0],
+            [0, 0, 0, 0]]),
+        PLAYER1_TURN, NO_ONE_WINS)
     });
-    it("test6 : placing player 2 chip in 0x2 already containing one player 2's 2 chips (explosion) is legal", function () {
-        var cell = { row: 0, col: 2 };
-        var explosion = { cellsExploded: [cell], boardAfterExplosions: createBoard([
-                [0, -1, 0, -1],
-                [0, 0, -1, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [2, 0, 0, 0],
-                [0, 0, 0, 0]]) };
-        expectMove(LEGAL, PLAYER2_TURN, createBoard([
+  
+    it ("test6 : placing player 2 chip in 0x2 already containing one player 2's 2 chips (explosion) is legal", function() {
+      let cell : Cell = {row : 0, col : 2};
+      let explosion : Explosion = {cellsExploded : [cell], boardAfterExplosions: createBoard([
+            [0, -1, 0, -1],
+            [0, 0, -1, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [2, 0, 0, 0],
+            [0, 0, 0, 0]])}
+      expectMove(LEGAL, PLAYER2_TURN,
+        createBoard([
             [0, 0, -2, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [2, 0, 0, 0],
-            [0, 0, 0, 0]]), 0, 2, [explosion], createBoard([
+            [0, 0, 0, 0]]),
+        0, 2, [explosion],
+        createBoard([
             [0, -1, 0, -1],
             [0, 0, -1, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [2, 0, 0, 0],
-            [0, 0, 0, 0]]), PLAYER1_TURN, NO_ONE_WINS);
+            [0, 0, 0, 0]]),
+        PLAYER1_TURN, NO_ONE_WINS)
     });
-    it("test7 : placing player 2 chip in 0x0 already containing one player 2's 1 chips (explosion) is legal", function () {
-        var cell = { row: 0, col: 0 };
-        var explosion = { cellsExploded: [cell], boardAfterExplosions: createBoard([
-                [0, -1, 0, 0],
-                [-1, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 1, 0, 0],
-                [0, 0, 0, 0]]) };
-        expectMove(LEGAL, PLAYER2_TURN, createBoard([
-            [-1, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 1, 0, 0],
-            [0, 0, 0, 0]]), 0, 0, [explosion], createBoard([
+  
+    it ("test7 : placing player 2 chip in 0x0 already containing one player 2's 1 chips (explosion) is legal", function() {
+      let cell : Cell = {row : 0, col : 0};
+      let explosion : Explosion = {cellsExploded : [cell], boardAfterExplosions: createBoard([
             [0, -1, 0, 0],
             [-1, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 1, 0, 0],
-            [0, 0, 0, 0]]), PLAYER1_TURN, NO_ONE_WINS);
+            [0, 0, 0, 0]])}
+      expectMove(LEGAL, PLAYER2_TURN,
+        createBoard([
+            [-1, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 0, 0]]),
+        0, 0, [explosion],
+        createBoard([
+            [0, -1, 0, 0],
+            [-1, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 0, 0]]),
+        PLAYER1_TURN, NO_ONE_WINS)
     });
-    it("test8 : placing player 1 chip in 3x2 already containing one player 1's 3 chips (two explosions) is legal", function () {
-        var cell1 = { row: 3, col: 2 };
-        var cell2 = { row: 2, col: 2 };
-        var explosion1 = { cellsExploded: [cell1], boardAfterExplosions: createBoard([
-                [0, 0, 0, 0],
-                [-1, 0, 0, 0],
-                [0, 0, 4, 0],
-                [0, 1, 0, 1],
-                [0, 0, 1, 0],
-                [0, 0, 0, 0]]) };
-        var explosion2 = { cellsExploded: [cell2], boardAfterExplosions: createBoard([
-                [0, 0, 0, 0],
-                [-1, 0, 1, 0],
-                [0, 1, 0, 1],
-                [0, 1, 1, 1],
-                [0, 0, 1, 0],
-                [0, 0, 0, 0]]) };
-        expectMove(LEGAL, PLAYER1_TURN, createBoard([
+  
+    it ("test8 : placing player 1 chip in 3x2 already containing one player 1's 3 chips (two explosions) is legal", function() {
+      let cell1 : Cell = {row : 3, col : 2};
+      let cell2 : Cell = {row : 2, col : 2};
+      let explosion1 : Explosion = {cellsExploded : [cell1], boardAfterExplosions: createBoard([
             [0, 0, 0, 0],
             [-1, 0, 0, 0],
-            [0, 0, 3, 0],
-            [0, 0, 3, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]]), 3, 2, [explosion1, explosion2], createBoard([
+            [0, 0, 4, 0],
+            [0, 1, 0, 1],
+            [0, 0, 1, 0],
+            [0, 0, 0, 0]])}
+      let explosion2 : Explosion = {cellsExploded : [cell2], boardAfterExplosions: createBoard([
             [0, 0, 0, 0],
             [-1, 0, 1, 0],
             [0, 1, 0, 1],
             [0, 1, 1, 1],
             [0, 0, 1, 0],
-            [0, 0, 0, 0]]), PLAYER2_TURN, NO_ONE_WINS);
-    });
-    it("test9 : placing player 1 chip in 3x2 already containing one player 1's 3 chips (two explosions) is legal", function () {
-        var cell1 = { row: 3, col: 2 };
-        var cell2 = { row: 2, col: 2 };
-        var explosion1 = { cellsExploded: [cell1], boardAfterExplosions: createBoard([
-                [0, 0, 0, 0],
-                [-1, 0, 0, 0],
-                [0, 0, 4, 0],
-                [0, 1, 0, 1],
-                [0, 0, 1, 0],
-                [0, 0, 0, 0]]) };
-        var explosion2 = { cellsExploded: [cell2], boardAfterExplosions: createBoard([
-                [0, 0, 0, 0],
-                [-1, 0, 1, 0],
-                [0, 1, 0, 1],
-                [0, 1, 1, 1],
-                [0, 0, 1, 0],
-                [0, 0, 0, 0]]) };
-        expectMove(LEGAL, PLAYER1_TURN, createBoard([
+            [0, 0, 0, 0]])}
+      expectMove(LEGAL, PLAYER1_TURN,
+        createBoard([
             [0, 0, 0, 0],
             [-1, 0, 0, 0],
-            [0, 0, -3, 0],
+            [0, 0, 3, 0],
             [0, 0, 3, 0],
             [0, 0, 0, 0],
-            [0, 0, 0, 0]]), 3, 2, [explosion1, explosion2], createBoard([
+            [0, 0, 0, 0]]),
+        3, 2, [explosion1, explosion2],
+        createBoard([
             [0, 0, 0, 0],
             [-1, 0, 1, 0],
             [0, 1, 0, 1],
             [0, 1, 1, 1],
             [0, 0, 1, 0],
-            [0, 0, 0, 0]]), PLAYER2_TURN, NO_ONE_WINS);
+            [0, 0, 0, 0]]),
+        PLAYER2_TURN, NO_ONE_WINS)
     });
-    it("test10 : placing player 1 chip in 3x2 already containing one player 1's 3 chips (two explosions) is legal", function () {
-        var cell1 = { row: 3, col: 2 };
-        var cell2 = { row: 2, col: 2 };
-        var cell3 = { row: 4, col: 2 };
-        var explosion1 = { cellsExploded: [cell1], boardAfterExplosions: createBoard([
-                [0, 0, 0, 0],
-                [-1, 0, 0, 0],
-                [0, 0, 4, 0],
-                [0, 1, 0, 1],
-                [0, 0, 4, 0],
-                [0, 0, 0, 0]]) };
-        var explosion2 = { cellsExploded: [cell2, cell3], boardAfterExplosions: createBoard([
-                [0, 0, 0, 0],
-                [-1, 0, 1, 0],
-                [0, 1, 0, 1],
-                [0, 1, 2, 1],
-                [0, 1, 0, 1],
-                [0, 0, 1, 0]]) };
-        expectMove(LEGAL, PLAYER1_TURN, createBoard([
+  
+    it ("test9 : placing player 1 chip in 3x2 already containing one player 1's 3 chips (two explosions) is legal", function() {
+      let cell1 : Cell = {row : 3, col : 2};
+      let cell2 : Cell = {row : 2, col : 2};
+      let explosion1 : Explosion = {cellsExploded : [cell1], boardAfterExplosions: createBoard([
             [0, 0, 0, 0],
             [-1, 0, 0, 0],
-            [0, 0, 3, 0],
-            [0, 0, 3, 0],
+            [0, 0, 4, 0],
+            [0, 1, 0, 1],
+            [0, 0, 1, 0],
+            [0, 0, 0, 0]])}
+      let explosion2 : Explosion = {cellsExploded : [cell2], boardAfterExplosions: createBoard([
+            [0, 0, 0, 0],
+            [-1, 0, 1, 0],
+            [0, 1, 0, 1],
+            [0, 1, 1, 1],
+            [0, 0, 1, 0],
+            [0, 0, 0, 0]])}
+      expectMove(LEGAL, PLAYER1_TURN,
+        createBoard([
+            [0, 0, 0, 0],
+            [-1, 0, 0, 0],
             [0, 0, -3, 0],
-            [0, 0, 0, 0]]), 3, 2, [explosion1, explosion2], createBoard([
+            [0, 0, 3, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]]),
+        3, 2, [explosion1, explosion2],
+        createBoard([
+            [0, 0, 0, 0],
+            [-1, 0, 1, 0],
+            [0, 1, 0, 1],
+            [0, 1, 1, 1],
+            [0, 0, 1, 0],
+            [0, 0, 0, 0]]),
+        PLAYER2_TURN, NO_ONE_WINS)
+    });
+  
+    it ("test10 : placing player 1 chip in 3x2 already containing one player 1's 3 chips (two explosions) is legal", function() {
+      let cell1 : Cell = {row : 3, col : 2};
+      let cell2 : Cell = {row : 2, col : 2};
+      let cell3 : Cell = {row : 4, col : 2};
+      let explosion1 : Explosion = {cellsExploded : [cell1], boardAfterExplosions: createBoard([
+            [0, 0, 0, 0],
+            [-1, 0, 0, 0],
+            [0, 0, 4, 0],
+            [0, 1, 0, 1],
+            [0, 0, 4, 0],
+            [0, 0, 0, 0]])}
+      let explosion2 : Explosion = {cellsExploded : [cell2, cell3], boardAfterExplosions: createBoard([
             [0, 0, 0, 0],
             [-1, 0, 1, 0],
             [0, 1, 0, 1],
             [0, 1, 2, 1],
             [0, 1, 0, 1],
-            [0, 0, 1, 0]]), PLAYER2_TURN, NO_ONE_WINS);
-    });
-    it("test11 : placing player 1 chip in 3x2 already containing one player 1's 3 chips (two explosions) is legal", function () {
-        var cell1 = { row: 3, col: 2 };
-        var cell2 = { row: 2, col: 2 };
-        var cell3 = { row: 4, col: 2 };
-        var explosion1 = { cellsExploded: [cell1], boardAfterExplosions: createBoard([
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 4, 0],
-                [0, 1, 0, 1],
-                [0, 0, 4, 0],
-                [0, 0, 0, 0]]) };
-        var explosion2 = { cellsExploded: [cell2, cell3], boardAfterExplosions: createBoard([
-                [0, 0, 0, 0],
-                [0, 0, 1, 0],
-                [0, 1, 0, 1],
-                [0, 1, 2, 1],
-                [0, 1, 0, 1],
-                [0, 0, 1, 0]]) };
-        expectMove(LEGAL, PLAYER1_TURN, createBoard([
+            [0, 0, 1, 0]])}
+      expectMove(LEGAL, PLAYER1_TURN,
+        createBoard([
             [0, 0, 0, 0],
-            [0, 0, 0, 0],
+            [-1, 0, 0, 0],
             [0, 0, 3, 0],
             [0, 0, 3, 0],
             [0, 0, -3, 0],
-            [0, 0, 0, 0]]), 3, 2, [explosion1], createBoard([
+            [0, 0, 0, 0]]),
+        3, 2, [explosion1, explosion2],
+        createBoard([
+            [0, 0, 0, 0],
+            [-1, 0, 1, 0],
+            [0, 1, 0, 1],
+            [0, 1, 2, 1],
+            [0, 1, 0, 1],
+            [0, 0, 1, 0]]),
+        PLAYER2_TURN, NO_ONE_WINS)
+    });
+  
+    it ("test11 : placing player 1 chip in 3x2 already containing one player 1's 3 chips (two explosions) is legal", function() {
+      let cell1 : Cell = {row : 3, col : 2};
+      let cell2 : Cell = {row : 2, col : 2};
+      let cell3 : Cell = {row : 4, col : 2};
+      let explosion1 : Explosion = {cellsExploded : [cell1], boardAfterExplosions: createBoard([
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 4, 0],
             [0, 1, 0, 1],
             [0, 0, 4, 0],
-            [0, 0, 0, 0]]), NO_ONE_TURN, PLAYER1_WIN_SCORES);
+            [0, 0, 0, 0]])}
+      let explosion2 : Explosion = {cellsExploded : [cell2, cell3], boardAfterExplosions: createBoard([
+            [0, 0, 0, 0],
+            [0, 0, 1, 0],
+            [0, 1, 0, 1],
+            [0, 1, 2, 1],
+            [0, 1, 0, 1],
+            [0, 0, 1, 0]])}
+      expectMove(LEGAL, PLAYER1_TURN,
+        createBoard([
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 3, 0],
+            [0, 0, 3, 0],
+            [0, 0, -3, 0],
+            [0, 0, 0, 0]]),
+        3, 2, [explosion1],
+        createBoard([
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 4, 0],
+            [0, 1, 0, 1],
+            [0, 0, 4, 0],
+            [0, 0, 0, 0]]),
+        NO_ONE_TURN, PLAYER1_WIN_SCORES)
     });
+    */
     /*
     - Simple explosion in middle
     - Explosion edge cases

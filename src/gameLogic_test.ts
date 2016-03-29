@@ -126,6 +126,7 @@ describe("In ChainReaction", function() {
     return board;
   } 
 
+  /*
   it ("test1 : placing player 1 chip in 0x0 from initial state is legal", function() {
     expectMove(LEGAL, PLAYER1_TURN, null, 0, 0, [],
       createBoard([
@@ -407,7 +408,8 @@ describe("In ChainReaction", function() {
           [0, 0, 0, 0]]), 
       NO_ONE_TURN, PLAYER1_WIN_SCORES)  
   });
-
+  */
+  
   /*
   - Simple explosion in middle
   - Explosion edge cases

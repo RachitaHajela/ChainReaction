@@ -3,14 +3,76 @@ describe("aiService", function() {
     return {board: board, delta: null};
   }
 
+  let ROWS = 6;
+  let COLS = 4;
+
+  function createBoard(boardRepr : number[][]): Board {
+    let board: Board = [];
+    for (let i = 0; i < ROWS; i++) {
+      board[i] = [];
+      for (let j = 0; j < COLS; j++) {
+        if (boardRepr[i][j] == 0) {
+            board[i][j] = {playerId: -1, numMolecules: 0};
+        } else if (boardRepr[i][j] > 0) {
+            board[i][j] = {playerId: 0, numMolecules: boardRepr[i][j]};
+        } else {
+            board[i][j] = {playerId: 1, numMolecules: -boardRepr[i][j]};
+        }
+      }
+    }
+    return board;
+  } 
+
   function createComputerMove(board: Board, turnIndex: number, maxDepth: number): IMove {
     let move: IMove = {
       turnIndexAfterMove: turnIndex,
       endMatchScores: null,
       stateAfterMove: createStateFromBoard(board),
     };
-    return aiService.createComputerMove(move, {maxDepth: maxDepth});
+    return aiService.createComputerMove(move);
   }
+
+  it("only one piece in board", function() {
+    let board : Board = createBoard([
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0]]);
+    let stateBeforeMove : IState = {board : board, delta : null};
+    let firstMove = gameLogic.createMove(stateBeforeMove, 3, 3, 0);
+    let computerMove : IMove = aiService.createComputerMove(firstMove);
+    expect(computerMove.stateAfterMove.board[0][0].numMolecules === 1 && computerMove.stateAfterMove.board[0][0].playerId === 1).toBe(true);      
+  }); 
+
+  it("only one optimal move", function() {
+    let board : Board = createBoard([
+          [0, 0, 0, 0], 
+          [0, 3, 1, 0], 
+          [0, 0, 0, 0], 
+          [0, 0, 0, 0], 
+          [0, -1, -1, 0], 
+          [0, -1, 0, 0]]);
+    let stateBeforeMove : IState = {board : board, delta : null};
+    let lastMove = gameLogic.createMove(stateBeforeMove, 2, 1, 1);
+    let computerMove : IMove = aiService.createComputerMove(lastMove);
+    expect(computerMove.stateAfterMove.board[1][1].numMolecules === 0 && computerMove.stateAfterMove.board[1][1].playerId === -1).toBe(true);      
+  }); 
+
+  it("only one optimal move", function() {
+    let board : Board = createBoard([
+          [0, 0, 0, 0], 
+          [0, 3, 1, 0], 
+          [0, -1, 0, -2], 
+          [0, 3, 0, 0], 
+          [0, -1, -1, 0], 
+          [0, -1, 0, 0]]);
+    let stateBeforeMove : IState = {board : board, delta : null};
+    let lastMove = gameLogic.createMove(stateBeforeMove, 1, 3, 1);
+    let computerMove : IMove = aiService.createComputerMove(lastMove);
+    expect(computerMove.stateAfterMove.board[3][1].numMolecules === 0 && computerMove.stateAfterMove.board[3][1].playerId === -1).toBe(true);      
+  }); 
 
   /*
   it("getPossibleMoves returns exactly one cell", function() {

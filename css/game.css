@@ -14,16 +14,16 @@
   animation: slowlyAppear 0.5s linear;
 }
 .moveRight {
-  animation: moveRight 0.5s ease-out;
+  animation: moveRight 5s ease-out;
 }
 .moveLeft {
-  animation: moveLeft 0.5s ease-out;
+  animation: moveLeft 5s ease-out;
 }
 .moveUp {
-  animation: moveUp 0.5s ease-out;
+  animation: moveUp 5s ease-out;
 }
 .moveDown {
-  animation: moveDown 0.5s ease-out;
+  animation: moveDown 5s ease-out;
 }
 .ball_blue {
   display: inline-block;

@@ -195,7 +195,7 @@ module game {
         return false;
     }
     log.info("shouldAnimate -- outside if")
-    return contains(state.delta.explosions[round].cellsExploded, row, col);
+    return !animationEnded && contains(state.delta.explosions[round].cellsExploded, row, col);
   }
 
   export function clickedOnModal(evt: Event) {

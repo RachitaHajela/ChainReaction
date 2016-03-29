@@ -179,7 +179,7 @@ var game;
             return false;
         }
         log.info("shouldAnimate -- outside if");
-        return contains(game.state.delta.explosions[round].cellsExploded, row, col);
+        return !game.animationEnded && contains(game.state.delta.explosions[round].cellsExploded, row, col);
     }
     game.shouldAnimate = shouldAnimate;
     function clickedOnModal(evt) {
