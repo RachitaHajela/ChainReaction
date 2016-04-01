@@ -132,9 +132,19 @@ var game;
         }
     }
     game.cellClicked = cellClicked;
-    function shouldShowImage(row, col) {
-        var cell = game.state.board[row][col];
-        return cell.playerId !== -1;
+    function shouldShowImage(row, col, round) {
+        //let cell = state.board[row][col];
+        //return cell.playerId !== -1;
+        try {
+            log.info("shouldShowImage : round ", round, "try");
+            return game.state.delta.explosions[round].boardAfterExplosions[row][col].playerId !== -1;
+        }
+        catch (e) {
+            log.info("shouldShowImage : round ", round, "catch");
+            var cell = game.state.board[row][col];
+            return cell.playerId !== -1;
+        }
+        //return contains(cells, row, col);
     }
     game.shouldShowImage = shouldShowImage;
     function containsMolOfPlayer(row, col, playerId, numMol) {
@@ -172,7 +182,7 @@ var game;
         return false;
     }
     function shouldAnimate(row, col, round) {
-        log.info("shouldAnimate --round and  explosions length:", round, game.state.delta.explosions.length);
+        log.info("shouldAnimate -- row , col , round and  explosions length:", row, col, round, game.state.delta.explosions.length);
         if (round >= game.state.delta.explosions.length) {
             log.info("shouldAnimate -- if");
             log.info("false");

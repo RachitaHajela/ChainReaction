@@ -146,9 +146,19 @@ module game {
     }
   }
 
-  export function shouldShowImage(row: number, col: number): boolean {
-    let cell = state.board[row][col];
-    return cell.playerId !== -1;
+  export function shouldShowImage(row: number, col: number, round: number): boolean {
+    //let cell = state.board[row][col];
+    //return cell.playerId !== -1;
+    try {
+      log.info("shouldShowImage : round ", round, "try")
+      
+      return state.delta.explosions[round].boardAfterExplosions[row][col].playerId !== -1;
+    } catch (e) {
+      log.info("shouldShowImage : round ", round, "catch")
+      let cell = state.board[row][col];
+      return cell.playerId !== -1;
+    }
+    //return contains(cells, row, col);
   }
 
   export function containsMolOfPlayer(row: number, col: number, playerId: number, numMol: number): boolean {
@@ -188,7 +198,7 @@ module game {
   }
   
   export function shouldAnimate(row: number, col: number, round: number): boolean {
-    log.info("shouldAnimate --round and  explosions length:",round,state.delta.explosions.length);
+    log.info("shouldAnimate -- row , col , round and  explosions length:",row, col, round, state.delta.explosions.length);
     if (round >= state.delta.explosions.length) {
         log.info("shouldAnimate -- if")
         log.info("false")
