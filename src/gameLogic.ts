@@ -146,6 +146,8 @@ function playerWon(playerId: number, board: Board): boolean {
       //TODO : update logic to show 4 molecules when game is over
       let currMoveCell: Cell = {row: row, col: col};
       let explosions: Explosion[] = [];
+      let initialState : Explosion = {cellsExploded : [], boardAfterExplosions : angular.copy(board)};
+      explosions.push(initialState);
       if(board[row][col].numMolecules < maxMolecules(row, col)) {
           //log.log("no explosion -- if");
           let delta: BoardDelta = {currMoveCell: currMoveCell,explosions: explosions};
@@ -261,9 +263,9 @@ function playerWon(playerId: number, board: Board): boolean {
       log.log(delta)
       //log.log(delta.explosions[0].cellsExploded[0])
       let stateAfterMove: IState = {delta: delta, board: board};
-      return stateAfterMove;
-      
+      return stateAfterMove;      
   }
+  
   export function checkMoveOk(stateTransition: IStateTransition): void {
     // We can assume that turnIndexBeforeMove and stateBeforeMove are legal, and we need
     // to verify that the move is OK.

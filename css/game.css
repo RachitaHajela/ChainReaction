@@ -14,16 +14,16 @@
   animation: slowlyAppear 0.5s linear;
 }
 .moveRight {
-  animation: moveRight 5s ease-out;
+  animation: moveRight 1s ease-out;
 }
 .moveLeft {
-  animation: moveLeft 5s ease-out;
+  animation: moveLeft 1s ease-out;
 }
 .moveUp {
-  animation: moveUp 5s ease-out;
+  animation: moveUp 1s ease-out;
 }
 .moveDown {
-  animation: moveDown 5s ease-out;
+  animation: moveDown 1s ease-out;
 }
 .ball_blue {
   display: inline-block;
@@ -88,6 +88,7 @@
   from {opacity: 0.1;}
   to {opacity: 1;}
 }
+/*
 @keyframes moveLeft {
   from {position:absolute; top:25%; left:10%; width:50%;height:50%}
   to {position:absolute; top:25%; left:-90%;  width:50%;height:50%}
@@ -104,6 +105,25 @@
   from {position:absolute; top:40%; left:25%;  width:50%;height:50%}
   to {position:absolute; top:140%; left:25%;  width:50%;height:50%}
 }
+*/
+
+@keyframes moveLeft {
+  from {position:absolute; top:25%; left:25%; width:50%;height:50%}
+  to {position:absolute; top:25%; left:-75%;  width:50%;height:50%}
+}
+@keyframes moveUp {
+  from {position:absolute; top:25%; left:25%; width:50%;height:50%}
+  to {position:absolute; top:-75%; left:25%;  width:50%;height:50%}
+}
+@keyframes moveRight {
+  from {position:absolute; top:25%; left:25%;  width:50%;height:50%}
+  to {position:absolute; top:25%; left:125%;  width:50%;height:50%}
+}
+@keyframes moveDown {
+  from {position:absolute; top:25%; left:25%;  width:50%;height:50%}
+  to {position:absolute; top:125%; left:25%;  width:50%;height:50%}
+}
+
 td {
   padding:0 5px 0 5px;
 }

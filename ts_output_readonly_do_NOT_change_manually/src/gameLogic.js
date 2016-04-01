@@ -118,6 +118,8 @@ var gameLogic;
         //TODO : update logic to show 4 molecules when game is over
         var currMoveCell = { row: row, col: col };
         var explosions = [];
+        var initialState = { cellsExploded: [], boardAfterExplosions: angular.copy(board) };
+        explosions.push(initialState);
         if (board[row][col].numMolecules < maxMolecules(row, col)) {
             //log.log("no explosion -- if");
             var delta_1 = { currMoveCell: currMoveCell, explosions: explosions };

@@ -84,7 +84,7 @@ module game {
 
   export let round: number = 0;
   let intervalFuture: ng.IPromise<any> = null;
-  let maxRound: number = 4;
+  let maxRound: number = 10;
   
   function updateUI(params: IUpdateUI): void {
     
@@ -94,6 +94,9 @@ module game {
     state = move.stateAfterMove;
     if (!state) {
       state = gameLogic.getInitialState();
+      maxRound = 1;
+    } else {
+      maxRound = state.delta.explosions.length+1;
     }
     canMakeMove = move.turnIndexAfterMove >= 0 && // game is ongoing
       params.yourPlayerIndex === move.turnIndexAfterMove; // it's my turn
@@ -150,19 +153,26 @@ module game {
     //let cell = state.board[row][col];
     //return cell.playerId !== -1;
     try {
-      log.info("shouldShowImage : round ", round, "try")
-      
+      log.info("shouldShowImage : round ", round, "row", row, "col", col, "try")      
       return state.delta.explosions[round].boardAfterExplosions[row][col].playerId !== -1;
     } catch (e) {
-      log.info("shouldShowImage : round ", round, "catch")
+      log.info("shouldShowImage : round ", round, "row", row, "col", col, "catch") 
+         
       let cell = state.board[row][col];
       return cell.playerId !== -1;
+      
+      //return false;
     }
     //return contains(cells, row, col);
   }
 
-  export function containsMolOfPlayer(row: number, col: number, playerId: number, numMol: number): boolean {
-      return state.board[row][col].playerId === playerId && state.board[row][col].numMolecules == numMol;
+  export function containsMolOfPlayer(row: number, col: number, round: number, playerId: number, numMol: number): boolean {
+      try {
+          let currCell : CellState = state.delta.explosions[round].boardAfterExplosions[row][col];
+          return currCell.playerId === playerId && currCell.numMolecules === numMol;
+      } catch (e) {
+          return state.board[row][col].playerId === playerId && state.board[row][col].numMolecules == numMol;
+      }
   }
 
   /*
@@ -199,6 +209,7 @@ module game {
   
   export function shouldAnimate(row: number, col: number, round: number): boolean {
     log.info("shouldAnimate -- row , col , round and  explosions length:",row, col, round, state.delta.explosions.length);
+    /*
     if (round >= state.delta.explosions.length) {
         log.info("shouldAnimate -- if")
         log.info("false")
@@ -206,6 +217,12 @@ module game {
     }
     log.info("shouldAnimate -- outside if")
     return !animationEnded && contains(state.delta.explosions[round].cellsExploded, row, col);
+    */
+    try {
+        return !animationEnded && contains(state.delta.explosions[round+1].cellsExploded, row, col);
+    } catch (e) {
+        return false;
+    }
   }
 
   export function clickedOnModal(evt: Event) {

@@ -75,7 +75,7 @@ var game;
     }
     game.round = 0;
     var intervalFuture = null;
-    var maxRound = 4;
+    var maxRound = 10;
     function updateUI(params) {
         log.info("Game got updateUI:", params);
         game.animationEnded = false;
@@ -83,6 +83,10 @@ var game;
         game.state = game.move.stateAfterMove;
         if (!game.state) {
             game.state = gameLogic.getInitialState();
+            maxRound = 1;
+        }
+        else {
+            maxRound = game.state.delta.explosions.length + 1;
         }
         game.canMakeMove = game.move.turnIndexAfterMove >= 0 &&
             params.yourPlayerIndex === game.move.turnIndexAfterMove; // it's my turn
@@ -136,19 +140,25 @@ var game;
         //let cell = state.board[row][col];
         //return cell.playerId !== -1;
         try {
-            log.info("shouldShowImage : round ", round, "try");
+            log.info("shouldShowImage : round ", round, "row", row, "col", col, "try");
             return game.state.delta.explosions[round].boardAfterExplosions[row][col].playerId !== -1;
         }
         catch (e) {
-            log.info("shouldShowImage : round ", round, "catch");
+            log.info("shouldShowImage : round ", round, "row", row, "col", col, "catch");
             var cell = game.state.board[row][col];
             return cell.playerId !== -1;
         }
         //return contains(cells, row, col);
     }
     game.shouldShowImage = shouldShowImage;
-    function containsMolOfPlayer(row, col, playerId, numMol) {
-        return game.state.board[row][col].playerId === playerId && game.state.board[row][col].numMolecules == numMol;
+    function containsMolOfPlayer(row, col, round, playerId, numMol) {
+        try {
+            var currCell = game.state.delta.explosions[round].boardAfterExplosions[row][col];
+            return currCell.playerId === playerId && currCell.numMolecules === numMol;
+        }
+        catch (e) {
+            return game.state.board[row][col].playerId === playerId && game.state.board[row][col].numMolecules == numMol;
+        }
     }
     game.containsMolOfPlayer = containsMolOfPlayer;
     /*
@@ -183,13 +193,21 @@ var game;
     }
     function shouldAnimate(row, col, round) {
         log.info("shouldAnimate -- row , col , round and  explosions length:", row, col, round, game.state.delta.explosions.length);
-        if (round >= game.state.delta.explosions.length) {
-            log.info("shouldAnimate -- if");
-            log.info("false");
+        /*
+        if (round >= state.delta.explosions.length) {
+            log.info("shouldAnimate -- if")
+            log.info("false")
             return false;
         }
-        log.info("shouldAnimate -- outside if");
-        return !game.animationEnded && contains(game.state.delta.explosions[round].cellsExploded, row, col);
+        log.info("shouldAnimate -- outside if")
+        return !animationEnded && contains(state.delta.explosions[round].cellsExploded, row, col);
+        */
+        try {
+            return !game.animationEnded && contains(game.state.delta.explosions[round + 1].cellsExploded, row, col);
+        }
+        catch (e) {
+            return false;
+        }
     }
     game.shouldAnimate = shouldAnimate;
     function clickedOnModal(evt) {
