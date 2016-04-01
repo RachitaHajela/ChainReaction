@@ -115,7 +115,7 @@ var game;
             if (game.round == maxRound) {
                 $interval.cancel(intervalFuture);
             }
-        }, 1000);
+        }, 500);
     }
     function cellClicked(row, col) {
         log.info("Clicked on cell:", row, col);

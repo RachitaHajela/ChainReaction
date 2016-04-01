@@ -126,7 +126,7 @@ module game {
       if (round == maxRound) {
         $interval.cancel(intervalFuture);
       }
-    }, 1000);
+    }, 500);
   }
   
 
