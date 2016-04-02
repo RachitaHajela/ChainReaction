@@ -10,6 +10,8 @@ var game;
     game.move = null;
     game.state = null;
     game.isHelpModalShown = false;
+    game.ROWS = 6;
+    game.COLS = 4;
     function init() {
         translate.setTranslations(getTranslations());
         translate.setLanguage('en');
@@ -115,7 +117,7 @@ var game;
             if (game.round == maxRound) {
                 $interval.cancel(intervalFuture);
             }
-        }, 500);
+        }, 300);
     }
     function cellClicked(row, col) {
         log.info("Clicked on cell:", row, col);
@@ -161,6 +163,17 @@ var game;
         }
     }
     game.containsMolOfPlayer = containsMolOfPlayer;
+    function maxMolecules(row, col) {
+        var maxMol = 4;
+        if (row == 0 || row == game.ROWS - 1) {
+            maxMol--;
+        }
+        if (col == 0 || col == game.COLS - 1) {
+            maxMol--;
+        }
+        return maxMol;
+    }
+    game.maxMolecules = maxMolecules;
     /*
     export function isPieceX(row: number, col: number): boolean {
       return state.board[row][col] === 'X';
@@ -210,6 +223,26 @@ var game;
         }
     }
     game.shouldAnimate = shouldAnimate;
+    function shouldAnimateForPlayer(row, col, round, playerId) {
+        try {
+            return !game.animationEnded && contains(game.state.delta.explosions[round + 1].cellsExploded, row, col) &&
+                (game.state.delta.explosions[round].boardAfterExplosions[row][col].playerId === playerId);
+        }
+        catch (e) {
+            return false;
+        }
+    }
+    game.shouldAnimateForPlayer = shouldAnimateForPlayer;
+    function moleculesMoreThanMaxMolecules(row, col, round, playerId) {
+        try {
+            return game.state.delta.explosions[round + 1].boardAfterExplosions[row][col].numMolecules > 0
+                && (game.state.delta.explosions[round].boardAfterExplosions[row][col].playerId === playerId);
+        }
+        catch (e) {
+            return false;
+        }
+    }
+    game.moleculesMoreThanMaxMolecules = moleculesMoreThanMaxMolecules;
     function clickedOnModal(evt) {
         if (evt.target === evt.currentTarget) {
             evt.preventDefault();

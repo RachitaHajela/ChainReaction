@@ -2,115 +2,118 @@
 <!-- build:[manifest] index.min.appcache -->
 <html lang="en" ng-app="myApp" ng-strict-di>
 <!-- /build -->
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>TicTacToe</title>
-  <meta name="description" content="TicTacToe game">
-  <link rel="shortcut icon"type="image/x-icon" href="data:image/x-icon;,"><!-- Suppress browser request for favicon.ico -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ChainReaction</title>
+    <meta name="description" content="Chain Reaction game">
+    <link rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;,">
+    <!-- Suppress browser request for favicon.ico -->
 
-  <!-- To ensure CSS files are downloaded in parallel, always include external CSS before external JavaScript. -->
-  <!-- build:[href] css/everything.min.css -->
-  <link rel="stylesheet" type="text/css" href="css/game.css">
-  <!-- /build -->
-  <link crossorigin="anonymous" rel="stylesheet" type="text/css" href="http://yoav-zibin.github.io/emulator/main.css">
+    <!-- To ensure CSS files are downloaded in parallel, always include external CSS before external JavaScript. -->
+    <!-- build:[href] css/everything.min.css -->
+    <link rel="stylesheet" type="text/css" href="css/game.css">
+    <!-- /build -->
+    <link crossorigin="anonymous" rel="stylesheet" type="text/css" href="http://yoav-zibin.github.io/emulator/main.css">
 
-  <!-- build:[href] http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css -->
-  <link crossorigin="anonymous" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.css">
-  <!-- /build -->
+    <!-- build:[href] http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css -->
+    <link crossorigin="anonymous" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.css">
+    <!-- /build -->
 
-  <!-- The crossorigin attribute controls, for scripts that are obtained from other origins, whether error information will be exposed. -->
-  <!-- build:[src] http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js -->
-  <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
-  <!-- /build -->
+    <!-- The crossorigin attribute controls, for scripts that are obtained from other origins, whether error information will be exposed. -->
+    <!-- build:[src] http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js -->
+    <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
+    <!-- /build -->
 
-  <!-- For the game rules/instructions, I use carousel from Angular UI + Bootstrap -->
-  <!-- build:[src] http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-touch.min.js -->
-  <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-touch.js"></script>
-  <!-- /build -->
-  <!-- build:[src] http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js -->
-  <script crossorigin="anonymous" src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.js"></script>
-  <!-- /build -->
+    <!-- For the game rules/instructions, I use carousel from Angular UI + Bootstrap -->
+    <!-- build:[src] http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-touch.min.js -->
+    <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-touch.js"></script>
+    <!-- /build -->
+    <!-- build:[src] http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js -->
+    <script crossorigin="anonymous" src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.js"></script>
+    <!-- /build -->
 
-  <!-- build:[src] http://yoav-zibin.github.io/emulator/dist/turnBasedServices.3.min.js -->
-  <script crossorigin="anonymous" src="http://yoav-zibin.github.io/emulator/dist/turnBasedServices.3.js"></script>
-  <!-- /build -->
+    <!-- build:[src] http://yoav-zibin.github.io/emulator/dist/turnBasedServices.3.min.js -->
+    <script crossorigin="anonymous" src="http://yoav-zibin.github.io/emulator/dist/turnBasedServices.3.js"></script>
+    <!-- /build -->
 
-  <!-- build:js js/everything.min.js -->
-  <script src="ts_output_readonly_do_NOT_change_manually/src/gameLogic.js"></script>
-  <script src="ts_output_readonly_do_NOT_change_manually/src/game.js"></script>
-  <!-- /build -->
+    <!-- build:js js/everything.min.js -->
+    <script src="ts_output_readonly_do_NOT_change_manually/src/gameLogic.js"></script>
+    <script src="ts_output_readonly_do_NOT_change_manually/src/game.js"></script>
+    <!-- /build -->
 
-  <!-- build:remove -->
-  <!-- https://github.com/philipwalton/html-inspector#getting-started -->
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/html-inspector/0.8.2/html-inspector.js"></script>
-  <!-- /build -->
+    <!-- build:remove -->
+    <!-- https://github.com/philipwalton/html-inspector#getting-started -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/html-inspector/0.8.2/html-inspector.js"></script>
+    <!-- /build -->
 </head>
-<body ng-cloak>
-  <div id="e2e_test_open_rules_modal" class="help-tip" ng-click="game.isHelpModalShown = true" aria-hidden="true"></div>
 
-  <div class="overlayModal" ng-click="game.clickedOnModal($event)"
-      ng-class="{zeroOpacity: !game.isHelpModalShown, oneOpacity: game.isHelpModalShown}" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" ng-click="game.isHelpModalShown = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 id="e2e_test_rules_title" class="modal-title">
+<body ng-cloak>
+    <div id="e2e_test_open_rules_modal" class="help-tip" ng-click="game.isHelpModalShown = true" aria-hidden="true"></div>
+
+    <div class="overlayModal" ng-click="game.clickedOnModal($event)" ng-class="{zeroOpacity: !game.isHelpModalShown, oneOpacity: game.isHelpModalShown}"
+    aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="game.isHelpModalShown = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="e2e_test_rules_title" class="modal-title">
             {{ 'RULES_OF_CHAINREACTION' | translate }}
           </h4>
+                </div>
+                <div class="modal-body">
+                    <carousel style="height: 150px">
+                        <slide>
+                            <table>
+                                <tr>
+                                    <td id="e2e_test_rules_slide1_text">
+                                        {{ 'RULES_SLIDE1' | translate }}
+                                    </td>
+                                    <td>
+                                        <img src="imgs/HelpSlide1.png" alt="Help slide 1" style="height:100px;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </slide>
+                        <slide>
+                            <table>
+                                <tr>
+                                    <td id="e2e_test_rules_slide2_text">
+                                        {{ 'RULES_SLIDE2' | translate }}
+                                    </td>
+                                    <td>
+                                        <img src="imgs/HelpSlide2.png" alt="Help slide 2" style="height:100px;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </slide>
+                        <slide>
+                            <table>
+                                <tr>
+                                    <td id="e2e_test_rules_slide3_text">
+                                        {{ 'RULES_SLIDE3' | translate }}
+                                    </td>
+                                    <td>
+                                        <img src="imgs/HelpSlide2.png" alt="Help slide 3" style="height:100px;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </slide>
+                    </carousel>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="game.isHelpModalShown = false">
+                        {{ 'CLOSE' | translate }}
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <carousel style="height: 150px">
-            <slide>
-              <table>
-                <tr>
-                  <td id="e2e_test_rules_slide1_text">
-                    {{ 'RULES_SLIDE1' | translate }}
-                  </td>
-                  <td>
-                    <img src="imgs/HelpSlide1.png" alt="Help slide 1" style="height:100px;">
-                  </td>
-                </tr>
-              </table>
-            </slide>
-            <slide>
-              <table>
-                <tr>
-                  <td id="e2e_test_rules_slide2_text">
-                  {{ 'RULES_SLIDE2' | translate }}
-                  </td>
-                  <td>
-                    <img src="imgs/HelpSlide2.png" alt="Help slide 2" style="height:100px;">
-                  </td>
-                </tr>
-              </table>
-            </slide>
-             <slide>
-              <table>
-                <tr>
-                  <td id="e2e_test_rules_slide3_text">
-                  {{ 'RULES_SLIDE3' | translate }}
-                  </td>
-                  <td>
-                    <img src="imgs/HelpSlide2.png" alt="Help slide 3" style="height:100px;">
-                  </td>
-                </tr>
-              </table>
-            </slide>
-          </carousel>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" ng-click="game.isHelpModalShown = false">
-            {{ 'CLOSE' | translate }}
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
 
-<div id="gameArea">
+    <div id="gameArea">
 
-  <!--
+        <!--
   <div ng-repeat="row in [0, 1, 2]"
       style="position:absolute; top:{{row * 33}}%; left:0; width:100%; height:33%;">
     <div ng-repeat="col in [0, 1, 2]"
@@ -146,130 +149,115 @@
       ng-class="{t: row === 0, l : col === 0, b, r}"
     
   -->
-  <div ng-repeat="row in [0, 1, 2, 3, 4, 5]" 
-    style="position:absolute; top:{{row * 16.6}}%; left:0; width:100%; height:16.6%;">
-    <div ng-repeat="col in [0, 1, 2, 3]"
-      style="position:absolute; top:0; left:{{col * 25}}%; width:25%; height:100%;"
-      ng-class="{t: row < 1, l : col < 1}"
-      class="b r"
-      ng-click="game.cellClicked(row, col)">
-      <div style="width:100%; height: 100%"
-        ng-if="game.shouldShowImage(row, col, game.round)">
-        <!-- ng-class="{slowlyAppear: game.shouldSlowlyAppear(row, col, round)}" -->
-       
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 0, 1)" class="stage" style="position:absolute; top:25%; left:25%; width:50%;height:50%">
-        <figure class="ball_red"></figure>
-       </section> 
-       
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 1, 1)" class="stage" style="position:absolute; top:25%; left:25%; width:50%;height:50%">
-        <figure class="ball_blue"></figure>
-       </section>
-       
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 0, 2)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%"
-         ng-class="{moveUp: game.shouldAnimate(row, col, game.round) && row==5, moveDown: game.shouldAnimate(row, col, game.round) && row==0}">
-        <figure class="ball_red"></figure>
-       </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 0, 2)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%"
-         ng-class="{moveRight: game.shouldAnimate(row, col, game.round) && col==0, moveLeft: game.shouldAnimate(row, col, game.round) && col==3}">
-        <figure class="ball_red"></figure>
-       </section>
-        
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 1, 2)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%"
-        ng-class="{moveUp: game.shouldAnimate(row, col, game.round) && row==5, moveDown: game.shouldAnimate(row, col, game.round) && row==0}">
-        <figure class="ball_blue"></figure>
-       </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 1, 2)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%"
-         ng-class="{moveRight: game.shouldAnimate(row, col, game.round) && col==0, moveLeft: game.shouldAnimate(row, col, game.round) && col==3}">
-        <figure class="ball_blue"></figure>
-       </section>
-        
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 0, 3)" class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%"
-         ng-class="{moveRight: game.shouldAnimate(row, col, game.round) && row==0, 
-                    moveLeft: game.shouldAnimate(row, col, game.round) && row==5, 
-                    moveDown: game.shouldAnimate(row, col, game.round) && col==3,
-                    moveUp: game.shouldAnimate(row, col, game.round) && col==0}"
-         >
-        <figure class="ball_red"></figure>
-       </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 0, 3)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%"
-         ng-class="{moveDown: game.shouldAnimate(row, col, game.round) && row==0, 
-                    moveUp: game.shouldAnimate(row, col, game.round) && row==5,
-                    moveLeft: game.shouldAnimate(row, col, game.round) && col==3,
-                    moveRight: game.shouldAnimate(row, col, game.round) && col==0}"
-         >
-        <figure class="ball_red"></figure>
-       </section>  
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 0, 3)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%"
-         ng-class="{moveLeft: game.shouldAnimate(row, col, game.round) && row==0,
-                    moveRight: game.shouldAnimate(row, col, game.round) && row==5,
-                    moveUp: game.shouldAnimate(row, col, game.round) && col==3,
-                    moveDown: game.shouldAnimate(row, col, game.round) && col==0}"
-         >
-        <figure class="ball_red"></figure>
-       </section>
+        <div ng-repeat="row in [0, 1, 2, 3, 4, 5]" style="position:absolute; top:{{row * 16.6}}%; left:0; width:100%; height:16.6%;">
+            <div ng-repeat="col in [0, 1, 2, 3]" style="position:absolute; top:0; left:{{col * 25}}%; width:25%; height:100%;" ng-class="{t: row < 1, l : col < 1}"
+            class="b r" ng-click="game.cellClicked(row, col)">
+                <div ng-repeat="playerId in [0,1]" style="width:100%; height: 100%" ng-if="game.shouldShowImage(row, col, game.round)">
+                    <!-- ng-class="{slowlyAppear: game.shouldSlowlyAppear(row, col, round)}" -->
 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 1, 3)" class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%"
-          ng-class="{moveRight: game.shouldAnimate(row, col, game.round) && row==0, 
-                    moveLeft: game.shouldAnimate(row, col, game.round) && row==5, 
-                    moveDown: game.shouldAnimate(row, col, game.round) && col==3,
-                    moveUp: game.shouldAnimate(row, col, game.round) && col==0}"
-         >
-        <figure class="ball_blue"></figure>
-       </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 1, 3)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%"
-          ng-class="{moveDown: game.shouldAnimate(row, col, game.round) && row==0, 
-                    moveUp: game.shouldAnimate(row, col, game.round) && row==5,
-                    moveLeft: game.shouldAnimate(row, col, game.round) && col==3,
-                    moveRight: game.shouldAnimate(row, col, game.round) && col==0}"
-         >
-        <figure class="ball_blue"></figure>
-       </section>  
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 1, 3)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%"
-          ng-class="{moveLeft: game.shouldAnimate(row, col, game.round) && row==0,
-                    moveRight: game.shouldAnimate(row, col, game.round) && row==5,
-                    moveUp: game.shouldAnimate(row, col, game.round) && col==3,
-                    moveDown: game.shouldAnimate(row, col, game.round) && col==0}"
-         >
-        <figure class="ball_blue"></figure>
-       </section>
+                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 1)" class="stage" style="position:absolute; top:25%; left:25%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 0, 4)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%"
-         ng-class="{moveUp: game.shouldAnimate(row, col, game.round)}">
-        <figure class="ball_red"></figure>
-       </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 0, 4)" class="stage" style="position:absolute; top:40%; left:25%; width:50%;height:50%"
-         ng-class="{moveRight: game.shouldAnimate(row, col, game.round)}">
-        <figure class="ball_red"></figure>
-       </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 0, 4)" class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%"
-         ng-class="{moveDown: game.shouldAnimate(row, col, game.round)}">
-        <figure class="ball_red"></figure>
-       </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 0, 4)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%"
-         ng-class="{moveLeft: game.shouldAnimate(row, col, game.round)}">
-        <figure class="ball_red"></figure>
-       </section>
+                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 2) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 2) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 1, 4)" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%"
-         ng-class="{moveUp: game.shouldAnimate(row, col, game.round)}">
-        <figure class="ball_blue"></figure>
-       </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 1, 4)" class="stage" style="position:absolute; top:40%; left:25%; width:50%;height:50%"
-         ng-class="{moveRight: game.shouldAnimate(row, col, game.round)}">
-        <figure class="ball_blue"></figure>
-       </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 1, 4)" class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%"
-         ng-class="{moveDown: game.shouldAnimate(row, col, game.round)}">
-        <figure class="ball_blue"></figure>
-       </section> 
-       <section ng-if="game.containsMolOfPlayer(row, col, game.round, 1, 4)" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%"
-         ng-class="{moveLeft: game.shouldAnimate(row, col, game.round)}">
-        <figure class="ball_blue"></figure>
-       </section>
+                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
 
-      </div>
-    </div>
-   <!--
+                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    class="stage" style="position:absolute; top:40%; left:25%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+
+                    <!-- animations -->
+                    <!--
+                    <section ng-if="game.moleculesMoreThanMaxMolecules(row,col,game.round,playerId)" class="stage slowlyAppear"
+                    style="position:absolute; top:25%; left:25%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    -->
+                    
+                    <section ng-if="game.maxMolecules(row,col)==2 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    style="position:absolute; top:25%; left:10%; width:50%;height:50%" ng-class="{moveUp: row==5, moveDown: row==0}">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.maxMolecules(row,col)==2 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    style="position:absolute; top:25%; left:40%; width:50%;height:50%" ng-class="{moveRight: col==0, moveLeft: col==3}">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    
+
+                    <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    style="position:absolute; top:10%; left:25%; width:50%;height:50%" ng-class="{moveRight:  row==0, 
+                    moveLeft:  row==5, 
+                    moveDown:  col==3,
+                    moveUp:  col==0}">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    style="position:absolute; top:25%; left:10%; width:50%;height:50%" ng-class="{moveDown:  row==0, 
+                    moveUp:  row==5,
+                    moveLeft:  col==3,
+                    moveRight:  col==0}">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    style="position:absolute; top:25%; left:40%; width:50%;height:50%" ng-class="{moveLeft:  row==0,
+                    moveRight:  row==5,
+                    moveUp: col==3,
+                    moveDown:  col==0}">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+
+                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage moveUp"
+                    style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage moveRight"
+                    style="position:absolute; top:40%; left:25%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage moveDown"
+                    style="position:absolute; top:10%; left:25%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage moveLeft"
+                    style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+                        <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
+                    </section>
+
+                </div>
+            </div>
+            <!--
    <div style="position:absolute; top:0; left:0%; width:25%; height:100%;"
         class="t r b l">
       <div  style="position:absolute; width:100%; height:100%;">
@@ -297,9 +285,10 @@
       </div>
     </div>
     -->
-  </div>
-  
-</div>
+        </div>
+
+    </div>
 
 </body>
+
 </html>
