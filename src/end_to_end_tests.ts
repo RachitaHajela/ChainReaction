@@ -48,7 +48,7 @@ module JasmineOverrides {
   });
 }
 
-describe('TicTacToe', function() {
+describe('ChainReaction', function() {
   browser.driver.manage().window().setSize(400, 600);
   browser.driver.manage().window().setPosition(10, 10);
   
@@ -102,11 +102,11 @@ describe('TicTacToe', function() {
     expectPiece(row, col, expectedPieceKind);
   }
 
+  /*
   it('should have a title', function () {
-    expect(browser.getTitle()).toEqual('TicTacToe');
+    expect(browser.getTitle()).toEqual('ChainReaction');
   });
 
-  /*
   it('should have an empty TicTacToe board', function () {
     expectBoard(
         [['', '', ''],

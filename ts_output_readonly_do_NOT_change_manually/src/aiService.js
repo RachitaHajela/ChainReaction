@@ -50,7 +50,7 @@ var aiService;
      * millisecondsLimit is a time limit, and maxDepth is a depth limit.
      */
     function createComputerMove(prevMove) {
-        //TODO : handle empty board
+        //TODO : handle empty board, randomization
         var currBoard = prevMove.stateAfterMove.board;
         var bestRow = -1;
         var bestCol = -1;

@@ -50,7 +50,7 @@ var JasmineOverrides;
         browser.pause();
     });
 })(JasmineOverrides || (JasmineOverrides = {}));
-describe('TicTacToe', function () {
+describe('ChainReaction', function () {
     browser.driver.manage().window().setSize(400, 600);
     browser.driver.manage().window().setPosition(10, 10);
     var checkNoErrorInLogsIntervalId = null;
@@ -98,10 +98,11 @@ describe('TicTacToe', function () {
         element(by.id('e2e_test_div_' + row + 'x' + col)).click();
         expectPiece(row, col, expectedPieceKind);
     }
-    it('should have a title', function () {
-        expect(browser.getTitle()).toEqual('TicTacToe');
-    });
     /*
+    it('should have a title', function () {
+      expect(browser.getTitle()).toEqual('ChainReaction');
+    });
+  
     it('should have an empty TicTacToe board', function () {
       expectBoard(
           [['', '', ''],

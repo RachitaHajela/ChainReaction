@@ -3,8 +3,8 @@ describe("aiService", function() {
     return {board: board, delta: null};
   }
 
-  let ROWS = 6;
-  let COLS = 4;
+  let ROWS = 9;
+  let COLS = 6;
 
   function createBoard(boardRepr : number[][]): Board {
     let board: Board = [];
@@ -32,14 +32,18 @@ describe("aiService", function() {
     return aiService.findComputerMove(move);
   }
 
+  
   it("only one piece in board", function() {
     let board : Board = createBoard([
-          [0, 0, 0, 0], 
-          [0, 0, 0, 0], 
-          [0, 0, 0, 0], 
-          [0, 0, 0, 0], 
-          [0, 0, 0, 0], 
-          [0, 0, 0, 0]]);
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0]]);
     let stateBeforeMove : IState = {board : board, delta : null};
     let firstMove = gameLogic.createMove(stateBeforeMove, 3, 3, 0);
     let computerMove : IMove = aiService.findComputerMove(firstMove);
@@ -48,12 +52,15 @@ describe("aiService", function() {
 
   it("only one optimal move", function() {
     let board : Board = createBoard([
-          [0, 0, 0, 0], 
-          [0, 3, 1, 0], 
-          [0, 0, 0, 0], 
-          [0, 0, 0, 0], 
-          [0, -1, -1, 0], 
-          [0, -1, 0, 0]]);
+          [0, 0, 0, 0, 0, 0], 
+          [0, 3, 1, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, -1, -1, 0, 0, 0], 
+          [0, -1, 0, 0, 0, 0]]);
     let stateBeforeMove : IState = {board : board, delta : null};
     let lastMove = gameLogic.createMove(stateBeforeMove, 2, 1, 1);
     let computerMove : IMove = aiService.findComputerMove(lastMove);
@@ -62,12 +69,15 @@ describe("aiService", function() {
 
   it("only one optimal move", function() {
     let board : Board = createBoard([
-          [0, 0, 0, 0], 
-          [0, 3, 1, 0], 
-          [0, -1, 0, -2], 
-          [0, 3, 0, 0], 
-          [0, -1, -1, 0], 
-          [0, -1, 0, 0]]);
+          [0, 0, 0, 0, 0, 0], 
+          [0, 3, 1, 0, 0, 0], 
+          [0, -1, 0, -2, 0, 0], 
+          [0, 3, 0, 0, 0, 0], 
+          [0, -1, -1, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 0, 0], 
+          [0, -1, 0, 0, 0, 0]]);
     let stateBeforeMove : IState = {board : board, delta : null};
     let lastMove = gameLogic.createMove(stateBeforeMove, 1, 3, 1);
     let computerMove : IMove = aiService.createComputerMove(lastMove);

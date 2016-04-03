@@ -51,7 +51,7 @@ module aiService {
    * millisecondsLimit is a time limit, and maxDepth is a depth limit.
    */
   export function createComputerMove(prevMove: IMove): IMove {
-    //TODO : handle empty board
+    //TODO : handle empty board, randomization
     let currBoard : Board = prevMove.stateAfterMove.board;
     let bestRow : number = -1;
     let bestCol : number = -1;
