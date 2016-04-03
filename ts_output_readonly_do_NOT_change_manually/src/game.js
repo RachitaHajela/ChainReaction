@@ -10,8 +10,8 @@ var game;
     game.move = null;
     game.state = null;
     game.isHelpModalShown = false;
-    game.ROWS = 6;
-    game.COLS = 4;
+    game.ROWS = 9;
+    game.COLS = 6;
     function init() {
         translate.setTranslations(getTranslations());
         translate.setLanguage('en');

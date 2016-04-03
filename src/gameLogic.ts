@@ -25,8 +25,8 @@ interface IState {
 }
 
 module gameLogic {
-  export const ROWS = 6;
-  export const COLS = 4;
+  export const ROWS = 9;
+  export const COLS = 6;
 
   /** Returns the initial TicTacToe board, which is a ROWSxCOLS matrix containing ''. */
   function getInitialBoard(): Board {

@@ -149,8 +149,8 @@
       ng-class="{t: row === 0, l : col === 0, b, r}"
     
   -->
-        <div ng-repeat="row in [0, 1, 2, 3, 4, 5]" style="position:absolute; top:{{row * 16.6}}%; left:0; width:100%; height:16.6%;">
-            <div ng-repeat="col in [0, 1, 2, 3]" style="position:absolute; top:0; left:{{col * 25}}%; width:25%; height:100%;" ng-class="{t: row < 1, l : col < 1}"
+        <div ng-repeat="row in [0, 1, 2, 3, 4, 5, 6, 7, 8]" style="position:absolute; top:{{row * 11.1}}%; left:0; width:100%; height:11.1%;">
+            <div ng-repeat="col in [0, 1, 2, 3, 4, 5]" style="position:absolute; top:0; left:{{col * 16.6}}%; width:16.6%; height:100%;" ng-class="{t: row < 1, l : col < 1}"
             class="b r" ng-click="game.cellClicked(row, col)">
                 <div ng-repeat="playerId in [0,1]" style="width:100%; height: 100%" ng-if="game.shouldShowImage(row, col, game.round)">
                     <!-- ng-class="{slowlyAppear: game.shouldSlowlyAppear(row, col, round)}" -->
@@ -207,33 +207,33 @@
                     -->
                     
                     <section ng-if="game.maxMolecules(row,col)==2 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
-                    style="position:absolute; top:25%; left:10%; width:50%;height:50%" ng-class="{moveUp: row==5, moveDown: row==0}">
+                    style="position:absolute; top:25%; left:10%; width:50%;height:50%" ng-class="{moveUp: row==game.ROWS-1, moveDown: row==0}">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     <section ng-if="game.maxMolecules(row,col)==2 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
-                    style="position:absolute; top:25%; left:40%; width:50%;height:50%" ng-class="{moveRight: col==0, moveLeft: col==3}">
+                    style="position:absolute; top:25%; left:40%; width:50%;height:50%" ng-class="{moveRight: col==0, moveLeft: col==game.COLS-1}">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     
 
                     <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
                     style="position:absolute; top:10%; left:25%; width:50%;height:50%" ng-class="{moveRight:  row==0, 
-                    moveLeft:  row==5, 
-                    moveDown:  col==3,
+                    moveLeft:  row==game.ROWS-1, 
+                    moveDown:  col==game.COLS-1,
                     moveUp:  col==0}">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
                     style="position:absolute; top:25%; left:10%; width:50%;height:50%" ng-class="{moveDown:  row==0, 
-                    moveUp:  row==5,
-                    moveLeft:  col==3,
+                    moveUp:  row==game.ROWS-1,
+                    moveLeft:  col==game.COLS-1,
                     moveRight:  col==0}">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
                     style="position:absolute; top:25%; left:40%; width:50%;height:50%" ng-class="{moveLeft:  row==0,
-                    moveRight:  row==5,
-                    moveUp: col==3,
+                    moveRight:  row==game.ROWS-1,
+                    moveUp: col==game.COLS-1,
                     moveDown:  col==0}">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>

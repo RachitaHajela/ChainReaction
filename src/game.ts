@@ -13,8 +13,8 @@ module game {
     export let move: IMove = null;
     export let state: IState = null;
     export let isHelpModalShown: boolean = false;
-    export const ROWS = 6;
-    export const COLS = 4;
+    export const ROWS = 9;
+    export const COLS = 6;
 
     export function init() {
         translate.setTranslations(getTranslations());

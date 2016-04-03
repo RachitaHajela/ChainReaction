@@ -3,7 +3,7 @@ module aiService {
   export function findComputerMove(move: IMove): IMove {
     return createComputerMove(move);
   }
-
+  
   /**
    * Returns all the possible moves for the given state and turnIndexBeforeMove.
    * Returns an empty array if the game is over.

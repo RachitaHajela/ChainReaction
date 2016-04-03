@@ -28,7 +28,7 @@ describe("aiService", function () {
             endMatchScores: null,
             stateAfterMove: createStateFromBoard(board),
         };
-        return aiService.createComputerMove(move);
+        return aiService.findComputerMove(move);
     }
     it("only one piece in board", function () {
         var board = createBoard([
@@ -40,7 +40,7 @@ describe("aiService", function () {
             [0, 0, 0, 0]]);
         var stateBeforeMove = { board: board, delta: null };
         var firstMove = gameLogic.createMove(stateBeforeMove, 3, 3, 0);
-        var computerMove = aiService.createComputerMove(firstMove);
+        var computerMove = aiService.findComputerMove(firstMove);
         expect(computerMove.stateAfterMove.board[0][0].numMolecules === 1 && computerMove.stateAfterMove.board[0][0].playerId === 1).toBe(true);
     });
     it("only one optimal move", function () {
@@ -53,7 +53,7 @@ describe("aiService", function () {
             [0, -1, 0, 0]]);
         var stateBeforeMove = { board: board, delta: null };
         var lastMove = gameLogic.createMove(stateBeforeMove, 2, 1, 1);
-        var computerMove = aiService.createComputerMove(lastMove);
+        var computerMove = aiService.findComputerMove(lastMove);
         expect(computerMove.stateAfterMove.board[1][1].numMolecules === 0 && computerMove.stateAfterMove.board[1][1].playerId === -1).toBe(true);
     });
     it("only one optimal move", function () {

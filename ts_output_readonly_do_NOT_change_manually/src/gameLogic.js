@@ -1,7 +1,7 @@
 var gameLogic;
 (function (gameLogic) {
-    gameLogic.ROWS = 6;
-    gameLogic.COLS = 4;
+    gameLogic.ROWS = 9;
+    gameLogic.COLS = 6;
     /** Returns the initial TicTacToe board, which is a ROWSxCOLS matrix containing ''. */
     function getInitialBoard() {
         var board = [];
