@@ -1,7 +1,7 @@
 var gameLogic;
 (function (gameLogic) {
-    gameLogic.ROWS = 6;
-    gameLogic.COLS = 4;
+    gameLogic.ROWS = 9;
+    gameLogic.COLS = 6;
     /** Returns the initial TicTacToe board, which is a ROWSxCOLS matrix containing ''. */
     function getInitialBoard() {
         var board = [];
@@ -118,6 +118,8 @@ var gameLogic;
         //TODO : update logic to show 4 molecules when game is over
         var currMoveCell = { row: row, col: col };
         var explosions = [];
+        var initialState = { cellsExploded: [], boardAfterExplosions: angular.copy(board) };
+        explosions.push(initialState);
         if (board[row][col].numMolecules < maxMolecules(row, col)) {
             //log.log("no explosion -- if");
             var delta_1 = { currMoveCell: currMoveCell, explosions: explosions };
@@ -265,6 +267,8 @@ var game;
     game.move = null;
     game.state = null;
     game.isHelpModalShown = false;
+    game.ROWS = 9;
+    game.COLS = 6;
     function init() {
         translate.setTranslations(getTranslations());
         translate.setLanguage('en');
@@ -328,6 +332,9 @@ var game;
         game.isComputerTurn = false; // to make sure the computer can only move once.
         moveService.makeMove(aiService.findComputerMove(game.move));
     }
+    game.round = 0;
+    var intervalFuture = null;
+    var maxRound = 10;
     function updateUI(params) {
         log.info("Game got updateUI:", params);
         game.animationEnded = false;
@@ -335,6 +342,10 @@ var game;
         game.state = game.move.stateAfterMove;
         if (!game.state) {
             game.state = gameLogic.getInitialState();
+            maxRound = 1;
+        }
+        else {
+            maxRound = game.state.delta.explosions.length + 1;
         }
         game.canMakeMove = game.move.turnIndexAfterMove >= 0 &&
             params.yourPlayerIndex === game.move.turnIndexAfterMove; // it's my turn
@@ -354,6 +365,16 @@ var game;
                 sendComputerMove();
             }
         }
+        if (intervalFuture) {
+            $interval.cancel(intervalFuture);
+        }
+        game.round = 0;
+        intervalFuture = $interval(function () {
+            game.round++;
+            if (game.round == maxRound) {
+                $interval.cancel(intervalFuture);
+            }
+        }, 300);
     }
     function cellClicked(row, col) {
         log.info("Clicked on cell:", row, col);
@@ -374,15 +395,42 @@ var game;
         }
     }
     game.cellClicked = cellClicked;
-    function shouldShowImage(row, col) {
-        var cell = game.state.board[row][col];
-        return cell.playerId !== -1;
+    function shouldShowImage(row, col, round) {
+        //let cell = state.board[row][col];
+        //return cell.playerId !== -1;
+        try {
+            log.info("shouldShowImage : round ", round, "row", row, "col", col, "try");
+            return game.state.delta.explosions[round].boardAfterExplosions[row][col].playerId !== -1;
+        }
+        catch (e) {
+            log.info("shouldShowImage : round ", round, "row", row, "col", col, "catch");
+            var cell = game.state.board[row][col];
+            return cell.playerId !== -1;
+        }
+        //return contains(cells, row, col);
     }
     game.shouldShowImage = shouldShowImage;
-    function containsMolOfPlayer(row, col, playerId, numMol) {
-        return game.state.board[row][col].playerId === playerId && game.state.board[row][col].numMolecules == numMol;
+    function containsMolOfPlayer(row, col, round, playerId, numMol) {
+        try {
+            var currCell = game.state.delta.explosions[round].boardAfterExplosions[row][col];
+            return currCell.playerId === playerId && currCell.numMolecules === numMol;
+        }
+        catch (e) {
+            return game.state.board[row][col].playerId === playerId && game.state.board[row][col].numMolecules == numMol;
+        }
     }
     game.containsMolOfPlayer = containsMolOfPlayer;
+    function maxMolecules(row, col) {
+        var maxMol = 4;
+        if (row == 0 || row == game.ROWS - 1) {
+            maxMol--;
+        }
+        if (col == 0 || col == game.COLS - 1) {
+            maxMol--;
+        }
+        return maxMol;
+    }
+    game.maxMolecules = maxMolecules;
     /*
     export function isPieceX(row: number, col: number): boolean {
       return state.board[row][col] === 'X';
@@ -391,13 +439,67 @@ var game;
     export function isPieceO(row: number, col: number): boolean {
       return state.board[row][col] === 'O';
     }
-    
-    export function shouldSlowlyAppear(row: number, col: number): boolean {
-      return !animationEnded &&
-          state.delta &&
-          state.delta.row === row && state.delta.col === col;
-    }
     */
+    function shouldSlowlyAppear(row, col, round) {
+        /*
+        return !animationEnded &&
+            state.delta &&
+            state.delta.row === row && state.delta.col === col;
+        */
+        return true;
+    }
+    game.shouldSlowlyAppear = shouldSlowlyAppear;
+    function contains(cells, row, col) {
+        log.info("shouldAnimate -- contains");
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].row === row && cells[i].col === col) {
+                //log.info("shouldAnimate")
+                log.info("true");
+                return true;
+            }
+        }
+        log.info("false");
+        return false;
+    }
+    function shouldAnimate(row, col, round) {
+        log.info("shouldAnimate -- row , col , round and  explosions length:", row, col, round, game.state.delta.explosions.length);
+        /*
+        if (round >= state.delta.explosions.length) {
+            log.info("shouldAnimate -- if")
+            log.info("false")
+            return false;
+        }
+        log.info("shouldAnimate -- outside if")
+        return !animationEnded && contains(state.delta.explosions[round].cellsExploded, row, col);
+        */
+        try {
+            return !game.animationEnded && contains(game.state.delta.explosions[round + 1].cellsExploded, row, col);
+        }
+        catch (e) {
+            return false;
+        }
+    }
+    game.shouldAnimate = shouldAnimate;
+    function shouldAnimateForPlayer(row, col, round, playerId) {
+        try {
+            return !game.animationEnded && contains(game.state.delta.explosions[round + 1].cellsExploded, row, col) &&
+                (game.state.delta.explosions[round].boardAfterExplosions[row][col].playerId === playerId);
+        }
+        catch (e) {
+            return false;
+        }
+    }
+    game.shouldAnimateForPlayer = shouldAnimateForPlayer;
+    function moleculesMoreThanMaxMolecules(row, col, round, playerId) {
+        try {
+            return game.state.delta.explosions[round + 1].boardAfterExplosions[row][col].numMolecules > 0
+                && (game.state.delta.explosions[round].boardAfterExplosions[row][col].playerId === playerId);
+        }
+        catch (e) {
+            return false;
+        }
+    }
+    game.moleculesMoreThanMaxMolecules = moleculesMoreThanMaxMolecules;
     function clickedOnModal(evt) {
         if (evt.target === evt.currentTarget) {
             evt.preventDefault();
@@ -419,51 +521,71 @@ var aiService;
 (function (aiService) {
     /** Returns the move that the computer player should do for the given state in move. */
     function findComputerMove(move) {
-        return createComputerMove(move, 
-        // at most 1 second for the AI to choose a move (but might be much quicker)
-        { millisecondsLimit: 1000 });
+        return createComputerMove(move);
     }
     aiService.findComputerMove = findComputerMove;
     /**
      * Returns all the possible moves for the given state and turnIndexBeforeMove.
      * Returns an empty array if the game is over.
      */
-    function getPossibleMoves(state, turnIndexBeforeMove) {
-        var possibleMoves = [];
+    /*
+    export function getPossibleMoves(state: IState, turnIndexBeforeMove: number): IMove[] {
+      let possibleMoves: IMove[] = [];
+      for (let i = 0; i < gameLogic.ROWS; i++) {
+        for (let j = 0; j < gameLogic.COLS; j++) {
+          try {
+            possibleMoves.push(gameLogic.createMove(state, i, j, turnIndexBeforeMove));
+          } catch (e) {
+            // The cell in that position was full.
+          }
+        }
+      }
+      return possibleMoves;
+    }
+    */
+    function score(board, row, col, prevMove) {
+        var move;
+        try {
+            move = gameLogic.createMove(prevMove.stateAfterMove, row, col, prevMove.turnIndexAfterMove);
+        }
+        catch (e) {
+            return 25;
+        }
+        var newBoard = move.stateAfterMove.board;
+        var opponentCells = 0;
         for (var i = 0; i < gameLogic.ROWS; i++) {
             for (var j = 0; j < gameLogic.COLS; j++) {
-                try {
-                    possibleMoves.push(gameLogic.createMove(state, i, j, turnIndexBeforeMove));
-                }
-                catch (e) {
+                if (newBoard[i][j].playerId != -1 && newBoard[i][j].playerId != prevMove.turnIndexAfterMove) {
+                    opponentCells++;
                 }
             }
         }
-        return possibleMoves;
+        return opponentCells;
     }
-    aiService.getPossibleMoves = getPossibleMoves;
     /**
      * Returns the move that the computer player should do for the given state.
      * alphaBetaLimits is an object that sets a limit on the alpha-beta search,
      * and it has either a millisecondsLimit or maxDepth field:
      * millisecondsLimit is a time limit, and maxDepth is a depth limit.
      */
-    function createComputerMove(move, alphaBetaLimits) {
-        // We use alpha-beta search, where the search states are TicTacToe moves.
-        return alphaBetaService.alphaBetaDecision(move, move.turnIndexAfterMove, getNextStates, getStateScoreForIndex0, null, alphaBetaLimits);
+    function createComputerMove(prevMove) {
+        //TODO : handle empty board, randomization
+        var currBoard = prevMove.stateAfterMove.board;
+        var bestRow = -1;
+        var bestCol = -1;
+        var bestScore = 25;
+        for (var i = 0; i < gameLogic.ROWS; i++) {
+            for (var j = 0; j < gameLogic.COLS; j++) {
+                var currScore = score(currBoard, i, j, prevMove);
+                if (currScore < bestScore) {
+                    bestRow = i;
+                    bestCol = j;
+                    bestScore = currScore;
+                }
+            }
+        }
+        return gameLogic.createMove(prevMove.stateAfterMove, bestRow, bestCol, prevMove.turnIndexAfterMove);
     }
     aiService.createComputerMove = createComputerMove;
-    function getStateScoreForIndex0(move, playerIndex) {
-        var endMatchScores = move.endMatchScores;
-        if (endMatchScores) {
-            return endMatchScores[0] > endMatchScores[1] ? Number.POSITIVE_INFINITY
-                : endMatchScores[0] < endMatchScores[1] ? Number.NEGATIVE_INFINITY
-                    : 0;
-        }
-        return 0;
-    }
-    function getNextStates(move, playerIndex) {
-        return getPossibleMoves(move.stateAfterMove, playerIndex);
-    }
 })(aiService || (aiService = {}));
 //# sourceMappingURL=aiService.js.map

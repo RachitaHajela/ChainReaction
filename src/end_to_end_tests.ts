@@ -103,10 +103,6 @@ describe('ChainReaction', function() {
   }
 
   /*
-  it('should have a title', function () {
-    expect(browser.getTitle()).toEqual('ChainReaction');
-  });
-
   it('should have an empty TicTacToe board', function () {
     expectBoard(
         [['', '', ''],
