@@ -49,7 +49,7 @@ var game;
             },
             RULES_SLIDE2: {
                 en: "Players take turns to place their atoms in a cell. Tap to place an atom in an empty cell or in a cell with same colored atoms.",
-                fr: "Les joueurs jouent tour à tour pour placer leurs orbes dans une case.",
+                fr: "Les joueurs jouent tour à tour pour placer leurs orbes dans une case. Appuie pour placer un atome dans une case vide ou avec des atomes de même couleur.",
             },
             RULES_SLIDE3: {
                 en: "Once a cell has reached its threshold, the atoms explode into the surrounding cells adding an extra atom and claiming the cell for the player.",
