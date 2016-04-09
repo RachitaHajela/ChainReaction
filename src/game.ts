@@ -159,10 +159,10 @@ module game {
         //let cell = state.board[row][col];
         //return cell.playerId !== -1;
         try {
-            log.info("shouldShowImage : round ", round, "row", row, "col", col, "try")
+           // log.info("shouldShowImage : round ", round, "row", row, "col", col, "try")
             return state.delta.explosions[round].boardAfterExplosions[row][col].playerId !== -1;
         } catch (e) {
-            log.info("shouldShowImage : round ", round, "row", row, "col", col, "catch")
+          //  log.info("shouldShowImage : round ", round, "row", row, "col", col, "catch")
 
             let cell = state.board[row][col];
             return cell.playerId !== -1;
