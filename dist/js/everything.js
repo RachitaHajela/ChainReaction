@@ -298,23 +298,27 @@ var game;
         return {
             RULES_OF_CHAINREACTION: {
                 en: "Rules of Chain Reaction",
-                iw: "חוקי המשחק",
+                fr: "Règles de Chain Reaction",
             },
             RULES_SLIDE1: {
-                en: "You and your opponent take turns to occupy the cells by putting their balls in them. A ball can be put in an empty cell or a cell already occupied by you",
-                iw: "אתה והיריב מסמנים איקס או עיגול כל תור",
+                en: "The objective of Chain Reaction is to take control of the board by eliminating your opponent's atoms.",
+                fr: "L'objectif de Chain Reaction est de prendre le contrôle de tout le plateau en éliminant les orbes de tes adversaires.",
             },
             RULES_SLIDE2: {
-                en: "A cell explodes and occupies the neighboring cells if the number of balls in it becomes equal to the number of neighbors it has",
-                iw: "הראשון שמסמן שורה, עמודה או אלכסון מנצח",
+                en: "Players take turns to place their atoms in a cell. Tap to place an atom in an empty cell or in a cell with same colored atoms.",
+                fr: "Les joueurs jouent tour à tour pour placer leurs orbes dans une case. Appuie pour placer un atome dans une case vide ou avec des atomes de même couleur.",
             },
             RULES_SLIDE3: {
-                en: "The player who wipes out the other player's occupied cells wins.",
-                iw: "הראשון שמסמן שורה, עמודה או אלכסון מנצח",
+                en: "Once a cell has reached its threshold, the atoms explode into the surrounding cells adding an extra atom and claiming the cell for the player.",
+                fr: "Dès qu'une case atteint sa masse critique, les orbes explosent dans les cases voisines en ajoutant une orbe et en donnant cette case au joueur.",
+            },
+            RULES_SLIDE4: {
+                en: "As soon as a player loses all their atoms, they are out of the game.",
+                fr: "Sitôt qu'un joueur perd toutes ses orbes, ils sont exclus du jeu.",
             },
             CLOSE: {
                 en: "Close",
-                iw: "סגור",
+                fr: "Fermer",
             },
         };
     }
@@ -399,11 +403,11 @@ var game;
         //let cell = state.board[row][col];
         //return cell.playerId !== -1;
         try {
-            log.info("shouldShowImage : round ", round, "row", row, "col", col, "try");
+            // log.info("shouldShowImage : round ", round, "row", row, "col", col, "try")
             return game.state.delta.explosions[round].boardAfterExplosions[row][col].playerId !== -1;
         }
         catch (e) {
-            log.info("shouldShowImage : round ", round, "row", row, "col", col, "catch");
+            //  log.info("shouldShowImage : round ", round, "row", row, "col", col, "catch")
             var cell = game.state.board[row][col];
             return cell.playerId !== -1;
         }
