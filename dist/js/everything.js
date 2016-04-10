@@ -324,7 +324,7 @@ var game;
     }
     function animationEndedCallback() {
         $rootScope.$apply(function () {
-            //log.info("Animation ended");
+            log.info("Animation ended");
             game.animationEnded = true;
             sendComputerMove();
         });
