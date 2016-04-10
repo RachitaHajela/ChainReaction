@@ -85,8 +85,8 @@ var gameLogic;
         boardAfterMove[row][col].playerId = turnIndexBeforeMove;
         boardAfterMove[row][col].numMolecules++;
         var stateAfterMove = updateBoard(row, col, boardAfterMove, turnIndexBeforeMove);
-        log.log(stateAfterMove.delta.currMoveCell);
-        log.log(stateAfterMove.delta.explosions[0]);
+        //log.log(stateAfterMove.delta.currMoveCell);
+        //log.log(stateAfterMove.delta.explosions[0]);
         var winner = getWinner(boardAfterMove);
         var endMatchScores;
         var turnIndexAfterMove;
@@ -219,8 +219,8 @@ var gameLogic;
         //log.log("expl0 cells exploded")
         //log.log(explosions[0].cellsExploded[0])
         var delta = { currMoveCell: currMoveCell, explosions: explosions };
-        log.log("delta");
-        log.log(delta);
+        //log.log("delta")
+        //log.log(delta)
         //log.log(delta.explosions[0].cellsExploded[0])
         var stateAfterMove = { delta: delta, board: board };
         return stateAfterMove;
@@ -243,7 +243,7 @@ var gameLogic;
     gameLogic.checkMoveOk = checkMoveOk;
     function forSimpleTestHtml() {
         var move = gameLogic.createMove(null, 0, 0, 0);
-        log.log("move=", move);
+        //log.log("move=", move);
         var params = {
             turnIndexBeforeMove: 0,
             stateBeforeMove: null,
@@ -324,7 +324,7 @@ var game;
     }
     function animationEndedCallback() {
         $rootScope.$apply(function () {
-            log.info("Animation ended");
+            //log.info("Animation ended");
             game.animationEnded = true;
             sendComputerMove();
         });
@@ -454,19 +454,19 @@ var game;
     }
     game.shouldSlowlyAppear = shouldSlowlyAppear;
     function contains(cells, row, col) {
-        log.info("shouldAnimate -- contains");
+        //log.info("shouldAnimate -- contains")
         for (var i = 0; i < cells.length; i++) {
             if (cells[i].row === row && cells[i].col === col) {
                 //log.info("shouldAnimate")
-                log.info("true");
+                //log.info("true")
                 return true;
             }
         }
-        log.info("false");
+        //log.info("false")
         return false;
     }
     function shouldAnimate(row, col, round) {
-        log.info("shouldAnimate -- row , col , round and  explosions length:", row, col, round, game.state.delta.explosions.length);
+        //log.info("shouldAnimate -- row , col , round and  explosions length:", row, col, round, state.delta.explosions.length);
         /*
         if (round >= state.delta.explosions.length) {
             log.info("shouldAnimate -- if")
