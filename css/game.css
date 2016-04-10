@@ -15,15 +15,19 @@
 }
 .moveRight {
   animation: moveRight .3s ease-out;
+  -webkit-animation: moveRight .3s ease-out;
 }
 .moveLeft {
   animation: moveLeft .3s ease-out;
+  -webkit-animation: moveLeft .3s ease-out;
 }
 .moveUp {
   animation: moveUp .3s ease-out;
+  -webkit-animation: moveUp .3s ease-out;
 }
 .moveDown {
   animation: moveDown .3s ease-out;
+  -webkit-animation: moveDown .3s ease-out;
 }
 .ball_blue {
   display: inline-block;
