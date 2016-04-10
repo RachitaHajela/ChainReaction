@@ -81,6 +81,7 @@ module game {
     }
 
     function sendComputerMove() {
+        log.info('isComputerTurn', isComputerTurn);
         if (!isComputerTurn) {
             return;
         }

@@ -330,6 +330,7 @@ var game;
         });
     }
     function sendComputerMove() {
+        log.info('isComputerTurn', game.isComputerTurn);
         if (!game.isComputerTurn) {
             return;
         }
