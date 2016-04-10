@@ -81,7 +81,7 @@ module game {
     }
 
     function sendComputerMove() {
-        log.info('isComputerTurn', isComputerTurn);
+        log.info('sendComputerMove', isComputerTurn);
         if (!isComputerTurn) {
             return;
         }
@@ -118,7 +118,7 @@ module game {
             // We calculate the AI move only after the animation finishes,
             // because if we call aiService now
             // then the animation will be paused until the javascript finishes.
-            if (!state.delta) {
+            if (animationEnded) {
                 // This is the first move in the match, so
                 // there is not going to be an animation, so
                 // call sendComputerMove() now (can happen in ?onlyAIs mode)
