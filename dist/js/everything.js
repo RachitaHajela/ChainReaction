@@ -357,6 +357,7 @@ var game;
         // Is it the computer's turn?
         game.isComputerTurn = game.canMakeMove &&
             params.playersInfo[params.yourPlayerIndex].playerId === '';
+        log.info('updateUI', game.isComputerTurn);
         if (game.isComputerTurn) {
             // To make sure the player won't click something and send a move instead of the computer sending a move.
             game.canMakeMove = false;
