@@ -122,7 +122,6 @@ var game;
             game.round++;
             if (game.round == maxRound) {
                 $interval.cancel(intervalFuture);
-                game.animationEnded = true;
             }
         }, 300);
     }

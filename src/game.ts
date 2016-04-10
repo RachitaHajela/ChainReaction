@@ -134,7 +134,6 @@ module game {
             round++;
             if (round == maxRound) {
                 $interval.cancel(intervalFuture);
-                animationEnded = true;
             }
         }, 300);
     }
