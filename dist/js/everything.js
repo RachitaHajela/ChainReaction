@@ -364,12 +364,11 @@ var game;
             // We calculate the AI move only after the animation finishes,
             // because if we call aiService now
             // then the animation will be paused until the javascript finishes.
-            if (game.animationEnded) {
-                // This is the first move in the match, so
-                // there is not going to be an animation, so
-                // call sendComputerMove() now (can happen in ?onlyAIs mode)
-                sendComputerMove();
-            }
+            //if (animationEnded) {
+            // This is the first move in the match, so
+            // there is not going to be an animation, so
+            // call sendComputerMove() now (can happen in ?onlyAIs mode)
+            sendComputerMove();
         }
         if (intervalFuture) {
             $interval.cancel(intervalFuture);
