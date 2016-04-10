@@ -74,7 +74,7 @@ module game {
 
     function animationEndedCallback() {
         $rootScope.$apply(function() {
-            log.info("Animation ended");
+            //log.info("Animation ended");
             animationEnded = true;
             sendComputerMove();
         });
@@ -211,20 +211,20 @@ module game {
     }
 
     function contains(cells: Cell[], row: number, col: number): boolean {
-        log.info("shouldAnimate -- contains")
+        //log.info("shouldAnimate -- contains")
         for (let i = 0; i < cells.length; i++) {
             if (cells[i].row === row && cells[i].col === col) {
                 //log.info("shouldAnimate")
-                log.info("true")
+                //log.info("true")
                 return true;
             }
         }
-        log.info("false")
+        //log.info("false")
         return false;
     }
 
     export function shouldAnimate(row: number, col: number, round: number): boolean {
-        log.info("shouldAnimate -- row , col , round and  explosions length:", row, col, round, state.delta.explosions.length);
+        //log.info("shouldAnimate -- row , col , round and  explosions length:", row, col, round, state.delta.explosions.length);
         /*
         if (round >= state.delta.explosions.length) {
             log.info("shouldAnimate -- if")

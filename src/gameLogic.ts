@@ -113,8 +113,8 @@ function playerWon(playerId: number, board: Board): boolean {
     boardAfterMove[row][col].playerId = turnIndexBeforeMove;
     boardAfterMove[row][col].numMolecules++;
     let stateAfterMove: IState = updateBoard(row,col,boardAfterMove,turnIndexBeforeMove);
-    log.log(stateAfterMove.delta.currMoveCell);
-    log.log(stateAfterMove.delta.explosions[0]);
+    //log.log(stateAfterMove.delta.currMoveCell);
+    //log.log(stateAfterMove.delta.explosions[0]);
     let winner = getWinner(boardAfterMove);
     let endMatchScores: number[];
     let turnIndexAfterMove: number;
@@ -259,8 +259,8 @@ function playerWon(playerId: number, board: Board): boolean {
       //log.log("expl0 cells exploded")
       //log.log(explosions[0].cellsExploded[0])
       let delta: BoardDelta = {currMoveCell: currMoveCell, explosions: explosions};
-      log.log("delta")
-      log.log(delta)
+      //log.log("delta")
+      //log.log(delta)
       //log.log(delta.explosions[0].cellsExploded[0])
       let stateAfterMove: IState = {delta: delta, board: board};
       return stateAfterMove;      
@@ -284,7 +284,7 @@ function playerWon(playerId: number, board: Board): boolean {
 
   export function forSimpleTestHtml() {
     var move = gameLogic.createMove(null, 0, 0, 0);
-    log.log("move=", move);
+    //log.log("move=", move);
     var params: IStateTransition = {
       turnIndexBeforeMove: 0,
       stateBeforeMove: null,

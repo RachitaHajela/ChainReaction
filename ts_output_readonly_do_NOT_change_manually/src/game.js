@@ -67,7 +67,7 @@ var game;
     }
     function animationEndedCallback() {
         $rootScope.$apply(function () {
-            log.info("Animation ended");
+            //log.info("Animation ended");
             game.animationEnded = true;
             sendComputerMove();
         });
@@ -197,19 +197,19 @@ var game;
     }
     game.shouldSlowlyAppear = shouldSlowlyAppear;
     function contains(cells, row, col) {
-        log.info("shouldAnimate -- contains");
+        //log.info("shouldAnimate -- contains")
         for (var i = 0; i < cells.length; i++) {
             if (cells[i].row === row && cells[i].col === col) {
                 //log.info("shouldAnimate")
-                log.info("true");
+                //log.info("true")
                 return true;
             }
         }
-        log.info("false");
+        //log.info("false")
         return false;
     }
     function shouldAnimate(row, col, round) {
-        log.info("shouldAnimate -- row , col , round and  explosions length:", row, col, round, game.state.delta.explosions.length);
+        //log.info("shouldAnimate -- row , col , round and  explosions length:", row, col, round, state.delta.explosions.length);
         /*
         if (round >= state.delta.explosions.length) {
             log.info("shouldAnimate -- if")
