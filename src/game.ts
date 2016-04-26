@@ -49,19 +49,19 @@ module game {
                 en: "Rules of Chain Reaction",
                 fr: "Règles de Chain Reaction",
             },
-            RULES_SLIDE1: {
+            RULES_CHAIN_REACTION_SLIDE1: {
                 en: "The objective of Chain Reaction is to take control of the board by eliminating your opponent's atoms.",
                 fr: "L'objectif de Chain Reaction est de prendre le contrôle de tout le plateau en éliminant les orbes de tes adversaires.",
             },
-            RULES_SLIDE2: {
+            RULES_CHAIN_REACTION_SLIDE2: {
                 en: "Players take turns to place their atoms in a cell. Tap to place an atom in an empty cell or in a cell with same colored atoms.",
                 fr: "Les joueurs jouent tour à tour pour placer leurs orbes dans une case. Appuie pour placer un atome dans une case vide ou avec des atomes de même couleur.",
             },
-            RULES_SLIDE3: {
+            RULES_CHAIN_REACTION_SLIDE3: {
                 en: "Once a cell has reached its threshold, the atoms explode into the surrounding cells adding an extra atom and claiming the cell for the player.",
                 fr: "Dès qu'une case atteint sa masse critique, les orbes explosent dans les cases voisines en ajoutant une orbe et en donnant cette case au joueur.",
             },
-            RULES_SLIDE4: {
+            RULES_CHAIN_REACTION_SLIDE4: {
                 en: "As soon as a player loses all their atoms, they are out of the game.",
                 fr: "Sitôt qu'un joueur perd toutes ses orbes, ils sont exclus du jeu.",
             },
