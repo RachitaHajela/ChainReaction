@@ -69,7 +69,7 @@ var game;
         $rootScope.$apply(function () {
             log.info("Animation ended");
             game.animationEnded = true;
-            sendComputerMove();
+            //sendComputerMove();
         });
     }
     function sendComputerMove() {

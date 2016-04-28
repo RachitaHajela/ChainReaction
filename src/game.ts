@@ -76,7 +76,7 @@ module game {
         $rootScope.$apply(function() {
             log.info("Animation ended");
             animationEnded = true;
-            sendComputerMove();
+            //sendComputerMove();
         });
     }
 
