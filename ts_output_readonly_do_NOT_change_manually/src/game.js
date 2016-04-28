@@ -108,22 +108,38 @@ var game;
             // because if we call aiService now
             // then the animation will be paused until the javascript finishes.
             log.info('updateUI - state info: ', game.state.delta);
-            //if (animationEnded) {
-            // This is the first move in the match, so
-            // there is not going to be an animation, so
-            // call sendComputerMove() now (can happen in ?onlyAIs mode)
-            sendComputerMove();
         }
+        /*
         if (intervalFuture) {
             $interval.cancel(intervalFuture);
         }
-        game.round = 0;
-        intervalFuture = $interval(function () {
-            game.round++;
-            if (game.round == maxRound) {
+        round = 0;
+        intervalFuture = $interval(() => {
+            round++;
+            if (round == maxRound) {
                 $interval.cancel(intervalFuture);
             }
         }, 300);
+        */
+        game.round = 0;
+        intervalFuture = $interval(performNextAnimation, 300);
+    }
+    function clearAnimationInterval() {
+        if (intervalFuture) {
+            $interval.cancel(intervalFuture);
+            intervalFuture = null;
+        }
+    }
+    function performNextAnimation() {
+        if (game.round == maxRound)
+            return;
+        game.round++;
+        if (game.round == maxRound) {
+            clearAnimationInterval();
+            if (game.isComputerTurn) {
+                sendComputerMove();
+            }
+        }
     }
     function cellClicked(row, col) {
         log.info("Clicked on cell:", row, col);
