@@ -134,7 +134,7 @@ var game;
         if (game.round == maxRound)
             return;
         game.round++;
-        if (game.round == maxRound) {
+        if (game.round > maxRound) {
             clearAnimationInterval();
             if (game.isComputerTurn) {
                 sendComputerMove();

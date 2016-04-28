@@ -153,7 +153,7 @@ module game {
         if (round == maxRound) return;
         
         round++;
-        if (round == maxRound) {
+        if (round > maxRound) {
             clearAnimationInterval();
             if (isComputerTurn) {
                 sendComputerMove();
