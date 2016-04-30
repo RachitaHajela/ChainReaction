@@ -300,19 +300,19 @@ var game;
                 en: "Rules of Chain Reaction",
                 fr: "Règles de Chain Reaction",
             },
-            RULES_SLIDE1: {
+            RULES_CHAIN_REACTION_SLIDE1: {
                 en: "The objective of Chain Reaction is to take control of the board by eliminating your opponent's atoms.",
                 fr: "L'objectif de Chain Reaction est de prendre le contrôle de tout le plateau en éliminant les orbes de tes adversaires.",
             },
-            RULES_SLIDE2: {
+            RULES_CHAIN_REACTION_SLIDE2: {
                 en: "Players take turns to place their atoms in a cell. Tap to place an atom in an empty cell or in a cell with same colored atoms.",
                 fr: "Les joueurs jouent tour à tour pour placer leurs orbes dans une case. Appuie pour placer un atome dans une case vide ou avec des atomes de même couleur.",
             },
-            RULES_SLIDE3: {
+            RULES_CHAIN_REACTION_SLIDE3: {
                 en: "Once a cell has reached its threshold, the atoms explode into the surrounding cells adding an extra atom and claiming the cell for the player.",
                 fr: "Dès qu'une case atteint sa masse critique, les orbes explosent dans les cases voisines en ajoutant une orbe et en donnant cette case au joueur.",
             },
-            RULES_SLIDE4: {
+            RULES_CHAIN_REACTION_SLIDE4: {
                 en: "As soon as a player loses all their atoms, they are out of the game.",
                 fr: "Sitôt qu'un joueur perd toutes ses orbes, ils sont exclus du jeu.",
             },
@@ -326,7 +326,7 @@ var game;
         $rootScope.$apply(function () {
             log.info("Animation ended");
             game.animationEnded = true;
-            sendComputerMove();
+            //sendComputerMove();
         });
     }
     function sendComputerMove() {
@@ -365,22 +365,42 @@ var game;
             // because if we call aiService now
             // then the animation will be paused until the javascript finishes.
             log.info('updateUI - state info: ', game.state.delta);
-            //if (animationEnded) {
-            // This is the first move in the match, so
-            // there is not going to be an animation, so
-            // call sendComputerMove() now (can happen in ?onlyAIs mode)
-            sendComputerMove();
         }
+        /*
         if (intervalFuture) {
             $interval.cancel(intervalFuture);
         }
-        game.round = 0;
-        intervalFuture = $interval(function () {
-            game.round++;
-            if (game.round == maxRound) {
+        round = 0;
+        intervalFuture = $interval(() => {
+            round++;
+            if (round == maxRound) {
                 $interval.cancel(intervalFuture);
             }
         }, 300);
+        */
+        game.round = 0;
+        intervalFuture = $interval(performNextAnimation, 300);
+    }
+    function clearAnimationInterval() {
+        log.info('clearAnimationInterval');
+        if (intervalFuture) {
+            $interval.cancel(intervalFuture);
+            intervalFuture = null;
+        }
+    }
+    function performNextAnimation() {
+        if (game.round > maxRound)
+            return;
+        log.info('round before: ', game.round);
+        game.round++;
+        log.info('round after: ', game.round);
+        log.info('maxRound : ', maxRound);
+        if (game.round > maxRound) {
+            clearAnimationInterval();
+            if (game.isComputerTurn) {
+                sendComputerMove();
+            }
+        }
     }
     function cellClicked(row, col) {
         log.info("Clicked on cell:", row, col);
