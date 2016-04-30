@@ -141,7 +141,7 @@ module game {
         }, 300);
         */
         round = 0;
-        intervalFuture = $interval(performNextAnimation, 750);
+        intervalFuture = $interval(performNextAnimation, 700);
     }
 
     function clearAnimationInterval() {
