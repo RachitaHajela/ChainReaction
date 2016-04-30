@@ -29,7 +29,7 @@ module aiService {
       try {
           move = gameLogic.createMove(prevMove.stateAfterMove, row, col, prevMove.turnIndexAfterMove);
       } catch (e) {
-          return 25;
+          return 1000;
       }
       
       let newBoard : Board = move.stateAfterMove.board;
@@ -56,7 +56,7 @@ module aiService {
     let bestCells : Cell[] = [];
     //let bestRow : number = -1;
     //let bestCol : number = -1;
-    let bestScore : number = 25;
+    let bestScore : number = 1000;
     for (let i = 0; i < gameLogic.ROWS; i++) {
         for (let j = 0; j < gameLogic.COLS; j++) {
             let currScore : number = score(currBoard, i, j, prevMove);
@@ -66,7 +66,7 @@ module aiService {
                 bestScore = currScore;
                 bestCells = [];
             }
-            if (currScore <= bestScore) {
+            if (currScore === bestScore) {
                 let newCell : Cell = {row: i, col: j};
                 bestCells.push(newCell);
             }

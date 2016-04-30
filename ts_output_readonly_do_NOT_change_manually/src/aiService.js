@@ -30,7 +30,7 @@ var aiService;
             move = gameLogic.createMove(prevMove.stateAfterMove, row, col, prevMove.turnIndexAfterMove);
         }
         catch (e) {
-            return 25;
+            return 1000;
         }
         var newBoard = move.stateAfterMove.board;
         var opponentCells = 0;
@@ -55,7 +55,7 @@ var aiService;
         var bestCells = [];
         //let bestRow : number = -1;
         //let bestCol : number = -1;
-        var bestScore = 25;
+        var bestScore = 1000;
         for (var i = 0; i < gameLogic.ROWS; i++) {
             for (var j = 0; j < gameLogic.COLS; j++) {
                 var currScore = score(currBoard, i, j, prevMove);
@@ -65,7 +65,7 @@ var aiService;
                     bestScore = currScore;
                     bestCells = [];
                 }
-                if (currScore <= bestScore) {
+                if (currScore === bestScore) {
                     var newCell = { row: i, col: j };
                     bestCells.push(newCell);
                 }
