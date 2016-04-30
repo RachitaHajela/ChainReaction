@@ -99,6 +99,8 @@ module game {
         animationEnded = false;
         move = params.move;
         state = move.stateAfterMove;
+        
+        clearAnimationInterval();
         if (!state) {
             state = gameLogic.getInitialState();
             maxRound = 1;

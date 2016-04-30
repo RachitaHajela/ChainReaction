@@ -345,6 +345,7 @@ var game;
         game.animationEnded = false;
         game.move = params.move;
         game.state = game.move.stateAfterMove;
+        clearAnimationInterval();
         if (!game.state) {
             game.state = gameLogic.getInitialState();
             maxRound = 1;
