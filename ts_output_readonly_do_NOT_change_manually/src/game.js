@@ -125,15 +125,19 @@ var game;
         intervalFuture = $interval(performNextAnimation, 300);
     }
     function clearAnimationInterval() {
+        log.info('clearAnimationInterval');
         if (intervalFuture) {
             $interval.cancel(intervalFuture);
             intervalFuture = null;
         }
     }
     function performNextAnimation() {
-        if (game.round == maxRound)
+        if (game.round > maxRound)
             return;
+        log.info('round before: ', game.round);
         game.round++;
+        log.info('round after: ', game.round);
+        log.info('maxRound : ', maxRound);
         if (game.round > maxRound) {
             clearAnimationInterval();
             if (game.isComputerTurn) {

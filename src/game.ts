@@ -143,6 +143,7 @@ module game {
     }
 
     function clearAnimationInterval() {
+        log.info('clearAnimationInterval')
         if (intervalFuture) {
             $interval.cancel(intervalFuture);
             intervalFuture = null;
@@ -150,9 +151,12 @@ module game {
     }
 
     function performNextAnimation() {
-        if (round == maxRound) return;
+        if (round > maxRound) return;
         
+        log.info ('round before: ', round);
         round++;
+        log.info ('round after: ', round);
+        log.info ('maxRound : ', maxRound);
         if (round > maxRound) {
             clearAnimationInterval();
             if (isComputerTurn) {
