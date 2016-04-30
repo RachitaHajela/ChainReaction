@@ -11,23 +11,23 @@
   border-top: 2pt solid black;
 }
 .slowlyAppear {
-  animation: slowlyAppear 0.4s linear;
+  animation: slowlyAppear 0.7s linear;
 }
 .moveRight {
-  animation: moveRight 0.4s ease-out;
-  -webkit-animation: moveRight 0.4s ease-out;
+  animation: moveRight 0.7s ease-out;
+  -webkit-animation: moveRight 0.7s ease-out;
 }
 .moveLeft {
-  animation: moveLeft 0.4s ease-out;
-  -webkit-animation: moveLeft 0.4s ease-out;
+  animation: moveLeft 0.7s ease-out;
+  -webkit-animation: moveLeft 0.7s ease-out;
 }
 .moveUp {
-  animation: moveUp 0.4s ease-out;
-  -webkit-animation: moveUp 0.4s ease-out;
+  animation: moveUp 0.7s ease-out;
+  -webkit-animation: moveUp 0.7s ease-out;
 }
 .moveDown {
-  animation: moveDown 0.4s ease-out;
-  -webkit-animation: moveDown 0.4s ease-out;
+  animation: moveDown 0.7s ease-out;
+  -webkit-animation: moveDown 0.7s ease-out;
 }
 .ball_blue {
   display: inline-block;
