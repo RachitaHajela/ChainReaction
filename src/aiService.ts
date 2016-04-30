@@ -29,7 +29,7 @@ module aiService {
       try {
           move = gameLogic.createMove(prevMove.stateAfterMove, row, col, prevMove.turnIndexAfterMove);
       } catch (e) {
-          return 1000;
+          return 10000;
       }
       
       let newBoard : Board = move.stateAfterMove.board;

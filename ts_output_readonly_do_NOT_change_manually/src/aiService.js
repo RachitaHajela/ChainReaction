@@ -30,7 +30,7 @@ var aiService;
             move = gameLogic.createMove(prevMove.stateAfterMove, row, col, prevMove.turnIndexAfterMove);
         }
         catch (e) {
-            return 1000;
+            return 10000;
         }
         var newBoard = move.stateAfterMove.board;
         var opponentCells = 0;
