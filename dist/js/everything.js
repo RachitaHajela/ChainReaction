@@ -380,7 +380,7 @@ var game;
         }, 300);
         */
         game.round = 0;
-        intervalFuture = $interval(performNextAnimation, 1000);
+        intervalFuture = $interval(performNextAnimation, 750);
     }
     function clearAnimationInterval() {
         log.info('clearAnimationInterval');
