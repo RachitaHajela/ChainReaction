@@ -597,21 +597,32 @@ var aiService;
     function createComputerMove(prevMove) {
         //TODO : handle empty board, randomization
         var currBoard = prevMove.stateAfterMove.board;
-        var bestRow = -1;
-        var bestCol = -1;
+        var bestCells = [];
+        //let bestRow : number = -1;
+        //let bestCol : number = -1;
         var bestScore = 25;
         for (var i = 0; i < gameLogic.ROWS; i++) {
             for (var j = 0; j < gameLogic.COLS; j++) {
                 var currScore = score(currBoard, i, j, prevMove);
                 if (currScore < bestScore) {
-                    bestRow = i;
-                    bestCol = j;
+                    //bestRow = i;
+                    //bestCol = j;
                     bestScore = currScore;
+                    bestCells = [];
+                }
+                if (currScore <= bestScore) {
+                    var newCell = { row: i, col: j };
+                    bestCells.push(newCell);
                 }
             }
         }
-        return gameLogic.createMove(prevMove.stateAfterMove, bestRow, bestCol, prevMove.turnIndexAfterMove);
+        var bestCellsLength = bestCells.length;
+        var index = getRandomInt(0, bestCellsLength);
+        return gameLogic.createMove(prevMove.stateAfterMove, bestCells[index].row, bestCells[index].col, prevMove.turnIndexAfterMove);
     }
     aiService.createComputerMove = createComputerMove;
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
 })(aiService || (aiService = {}));
 //# sourceMappingURL=aiService.js.map

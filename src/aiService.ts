@@ -53,20 +53,32 @@ module aiService {
   export function createComputerMove(prevMove: IMove): IMove {
     //TODO : handle empty board, randomization
     let currBoard : Board = prevMove.stateAfterMove.board;
-    let bestRow : number = -1;
-    let bestCol : number = -1;
+    let bestCells : Cell[] = [];
+    //let bestRow : number = -1;
+    //let bestCol : number = -1;
     let bestScore : number = 25;
     for (let i = 0; i < gameLogic.ROWS; i++) {
         for (let j = 0; j < gameLogic.COLS; j++) {
             let currScore : number = score(currBoard, i, j, prevMove);
             if (currScore < bestScore) {
-                bestRow = i;
-                bestCol = j;
+                //bestRow = i;
+                //bestCol = j;
                 bestScore = currScore;
+                bestCells = [];
+            }
+            if (currScore <= bestScore) {
+                let newCell : Cell = {row: i, col: j};
+                bestCells.push(newCell);
             }
         }
     }
-    return gameLogic.createMove(prevMove.stateAfterMove, bestRow, bestCol, prevMove.turnIndexAfterMove);
+    let bestCellsLength : number = bestCells.length;
+    let index = getRandomInt(0, bestCellsLength)
+    return gameLogic.createMove(prevMove.stateAfterMove, bestCells[index].row, bestCells[index].col, prevMove.turnIndexAfterMove);
+  }
+
+  function getRandomInt(min : number, max : number) {
+    return Math.floor(Math.random() * (max - min)) + min;
   }
 
   /*
