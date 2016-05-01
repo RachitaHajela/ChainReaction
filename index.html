@@ -214,7 +214,7 @@
                     </section>
                     -->
 
-                    <section ng-if="game.maxMolecules(row,col)==2 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    <section ng-if="game.maxMolecules(row,col)==2 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage bckColor"
                     style="position:absolute; top:25%; left:10%; width:50%;height:50%" ng-class="{moveUp: row==game.ROWS-1, moveDown: row==0}">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>

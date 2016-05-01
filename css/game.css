@@ -13,6 +13,10 @@
 .slowlyAppear {
   animation: slowlyAppear 0.3s linear;
 }
+.bckColor {
+  animation: bckColor 0.3s ease-out;  
+  -webkit-animation: bckColor 0.3s ease-out;  
+}
 .moveRight {
   animation: moveRight 0.3s ease-out;
   -webkit-animation: moveRight 0.3s ease-out;
@@ -110,6 +114,11 @@
   to {position:absolute; top:140%; left:25%;  width:50%;height:50%}
 }
 */
+
+@keyframes bckColor {
+  from {background-color: yellow}
+  to {background-color: white}
+}
 
 @keyframes moveLeft {
   from {position:absolute; top:25%; left:25%; width:50%;height:50%}
