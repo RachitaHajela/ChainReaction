@@ -10,6 +10,12 @@
 .t {
   border-top: 2pt solid black;
 }
+.thickBorder {
+  border-right: 5pt solid black;
+  border-bottom: 5pt solid black;
+  border-left: 5pt solid black;
+  border-top: 5pt solid black;
+}
 .slowlyAppear {
   animation: slowlyAppear 0.3s linear;
 }

@@ -201,6 +201,10 @@ var game;
         return maxMol;
     }
     game.maxMolecules = maxMolecules;
+    function wasCellClicked(row, col) {
+        return ((row == game.state.delta.currMoveCell.row) && (col == game.state.delta.currMoveCell.col));
+    }
+    game.wasCellClicked = wasCellClicked;
     /*
     export function isPieceX(row: number, col: number): boolean {
       return state.board[row][col] === 'X';

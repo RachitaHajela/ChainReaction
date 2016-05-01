@@ -222,6 +222,11 @@ module game {
         }
         return maxMol;
     }
+    
+    export function wasCellClicked(row: number, col: number): boolean {
+        return ((row == state.delta.currMoveCell.row) && (col == state.delta.currMoveCell.col));
+    }
+    
     /*
     export function isPieceX(row: number, col: number): boolean {
       return state.board[row][col] === 'X';
