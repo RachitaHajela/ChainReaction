@@ -224,7 +224,11 @@ module game {
     }
     
     export function wasCellClicked(row: number, col: number): boolean {
-        return ((row == state.delta.currMoveCell.row) && (col == state.delta.currMoveCell.col));
+        try {
+            return ((row == state.delta.currMoveCell.row) && (col == state.delta.currMoveCell.col));
+        } catch (e) {
+            return false;
+        }
     }
     
     /*

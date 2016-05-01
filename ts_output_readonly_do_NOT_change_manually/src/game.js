@@ -202,7 +202,12 @@ var game;
     }
     game.maxMolecules = maxMolecules;
     function wasCellClicked(row, col) {
-        return ((row == game.state.delta.currMoveCell.row) && (col == game.state.delta.currMoveCell.col));
+        try {
+            return ((row == game.state.delta.currMoveCell.row) && (col == game.state.delta.currMoveCell.col));
+        }
+        catch (e) {
+            return false;
+        }
     }
     game.wasCellClicked = wasCellClicked;
     /*
