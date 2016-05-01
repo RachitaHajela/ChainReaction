@@ -136,7 +136,8 @@
         <div style="position:absolute; top:0, left:0; width:100%; height:100%" class="t l b r">
         <div ng-repeat="row in [0, 1, 2, 3, 4, 5, 6, 7, 8]" style="position:absolute; top:{{row * 11.1 + 0.2}}%; left:0; width:100%; height:{{11.1-0.4}}%;">
             <div ng-repeat="col in [0, 1, 2, 3, 4, 5]" style="position:absolute; top:0; left:{{col * 16.6 + 0.5}}%; width:{{16.6 - 0.4}}%; height:100%;"
-            class="t l b r bckColor" ng-click="game.cellClicked(row, col)">
+            class="t l b r" ng-class="{bckColor: game.shouldAnimateForPlayer(row, col, game.round, 0) && game.shouldAnimateForPlayer(row, col, game.round, 1)}" 
+            ng-click="game.cellClicked(row, col)">
                 <div ng-repeat="playerId in [0,1]" style="width:100%; height: 100%" ng-if="game.shouldShowImage(row, col, game.round)">
                     <!-- ng-class="{slowlyAppear: game.shouldSlowlyAppear(row, col, round)}" -->
 
