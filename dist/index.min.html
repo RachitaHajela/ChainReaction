@@ -142,82 +142,82 @@
                     <!-- ng-class="{slowlyAppear: game.shouldSlowlyAppear(row, col, round)}" -->
 
                     <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 1)" id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}"
-                    class="stage" style="position:absolute; top:25%; left:25%; width:50%;height:50%">
+                     style="position:absolute; top:25%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
 
                     <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 2) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
-                    id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+                    id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:10%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 2) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
-                    id="{{'e2e_test_ball2_' + playerId + '_' + row + 'x' + col}}" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+                    id="{{'e2e_test_ball2_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:40%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
 
                     <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
-                    id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}" class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%">
+                    id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:10%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
-                    id="{{'e2e_test_ball2_' + playerId + '_' + row + 'x' + col}}" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+                    id="{{'e2e_test_ball2_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:10%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
-                    id="{{'e2e_test_ball3_' + playerId + '_' + row + 'x' + col}}" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+                    id="{{'e2e_test_ball3_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:40%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
 
                     <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
-                    id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}" class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+                    id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:10%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
-                    id="{{'e2e_test_ball2_' + playerId + '_' + row + 'x' + col}}" class="stage" style="position:absolute; top:40%; left:25%; width:50%;height:50%">
+                    id="{{'e2e_test_ball2_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:40%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
-                    id="{{'e2e_test_ball3_' + playerId + '_' + row + 'x' + col}}" class="stage" style="position:absolute; top:10%; left:25%; width:50%;height:50%">
+                    id="{{'e2e_test_ball3_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:10%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
-                    id="{{'e2e_test_ball4_' + playerId + '_' + row + 'x' + col}}" class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+                    id="{{'e2e_test_ball4_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:40%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
 
                     <!-- animations -->
                     <!--
-                    <section ng-if="game.moleculesMoreThanMaxMolecules(row,col,game.round,playerId)" class="stage slowlyAppear"
+                    <section ng-if="game.moleculesMoreThanMaxMolecules(row,col,game.round,playerId)" class="slowlyAppear"
                     style="position:absolute; top:25%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
                     -->
 
-                    <section ng-if="game.maxMolecules(row,col)==2 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    <section ng-if="game.maxMolecules(row,col)==2 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" 
                     style="position:absolute; top:25%; left:10%; width:50%;height:50%" ng-class="{moveUp: row==game.ROWS-1, moveDown: row==0}">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.maxMolecules(row,col)==2 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    <section ng-if="game.maxMolecules(row,col)==2 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" 
                     style="position:absolute; top:25%; left:40%; width:50%;height:50%" ng-class="{moveRight: col==0, moveLeft: col==game.COLS-1}">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
 
 
-                    <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" 
                     style="position:absolute; top:10%; left:25%; width:50%;height:50%" ng-class="{moveRight:  row==0, 
                     moveLeft:  row==game.ROWS-1, 
                     moveDown:  col==game.COLS-1,
                     moveUp:  col==0}">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" 
                     style="position:absolute; top:25%; left:10%; width:50%;height:50%" ng-class="{moveDown:  row==0, 
                     moveUp:  row==game.ROWS-1,
                     moveLeft:  col==game.COLS-1,
                     moveRight:  col==0}">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage"
+                    <section ng-if="game.maxMolecules(row,col)==3 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" 
                     style="position:absolute; top:25%; left:40%; width:50%;height:50%" ng-class="{moveLeft:  row==0,
                     moveRight:  row==game.ROWS-1,
                     moveUp: col==game.COLS-1,
@@ -225,19 +225,19 @@
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
 
-                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage moveUp"
+                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="moveUp"
                     style="position:absolute; top:25%; left:10%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage moveRight"
+                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="moveRight"
                     style="position:absolute; top:40%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage moveDown"
+                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="moveDown"
                     style="position:absolute; top:10%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="stage moveLeft"
+                    <section ng-if="game.maxMolecules(row,col)==4 && game.shouldAnimateForPlayer(row,col,game.round,playerId)" class="moveLeft"
                     style="position:absolute; top:25%; left:40%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
@@ -249,10 +249,10 @@
    <div style="position:absolute; top:0; left:0%; width:25%; height:100%;"
         class="t r b l">
       <div  style="position:absolute; width:100%; height:100%;">
-     <section class="stage" style="position:absolute; top:25%; left:10%; width:50%;height:50%">
+     <section  style="position:absolute; top:25%; left:10%; width:50%;height:50%">
         <figure class="ball"></figure>
     </section> 
-    <section class="stage" style="position:absolute; top:25%; left:40%; width:50%;height:50%">
+    <section  style="position:absolute; top:25%; left:40%; width:50%;height:50%">
         <figure class="ball"></figure>
     </section>
       </div>
