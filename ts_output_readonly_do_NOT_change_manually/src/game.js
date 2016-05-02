@@ -123,7 +123,7 @@ var game;
         }, 300);
         */
         game.round = 0;
-        intervalFuture = $interval(performNextAnimation, 300);
+        intervalFuture = $interval(performNextAnimation, 700);
     }
     function clearAnimationInterval() {
         log.info('clearAnimationInterval');
