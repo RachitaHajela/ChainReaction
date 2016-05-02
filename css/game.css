@@ -46,8 +46,10 @@
   margin: 0;
   border-radius: 50%;
   position: relative;
+  background: blue;
+  /*
   background: radial-gradient(circle at 50% 120%, #81e8f6, #76deef 10%, #055194 80%, #062745 100%);
-  
+  */
 }
 .ball_red {
   display: inline-block;
@@ -56,7 +58,10 @@
   margin: 0;
   border-radius: 50%;
   position: relative;
+  background: red;
+  /*
   background: radial-gradient(circle at 50% 120%, #fed5d7, #fb898d 10%, #e0080f 80%, #480205 100%);
+  */
 }
 .ball_blue:before {
   content: "";
@@ -66,7 +71,9 @@
   width: 90%;
   height: 90%;
   border-radius: 50%;
+  /*
   background: radial-gradient(circle at 50% 0px, #ffffff, rgba(255, 255, 255, 0) 58%);
+  */
   -webkit-filter: blur(5px);
   z-index: 2;
 }
@@ -78,7 +85,9 @@
   width: 90%;
   height: 90%;
   border-radius: 50%;
+  /*
   background: radial-gradient(circle at 50% 0px, #ffffff, rgba(255, 255, 255, 0) 58%);
+  */
   -webkit-filter: blur(5px);
   z-index: 2;
 }
