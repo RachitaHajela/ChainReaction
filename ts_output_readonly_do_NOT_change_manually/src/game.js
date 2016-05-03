@@ -23,10 +23,6 @@ var game;
             checkMoveOk: gameLogic.checkMoveOk,
             updateUI: updateUI
         });
-        // See http://www.sitepoint.com/css3-animation-javascript-event-handlers/
-        document.addEventListener("animationend", animationEndedCallback, false); // standard
-        document.addEventListener("webkitAnimationEnd", animationEndedCallback, false); // WebKit
-        document.addEventListener("oanimationend", animationEndedCallback, false); // Opera
         var w = window;
         if (w["HTMLInspector"]) {
             setInterval(function () {
@@ -64,13 +60,6 @@ var game;
                 fr: "Fermer",
             },
         };
-    }
-    function animationEndedCallback() {
-        $rootScope.$apply(function () {
-            log.info("Animation ended");
-            game.animationEnded = true;
-            //sendComputerMove();
-        });
     }
     function sendComputerMove() {
         log.info('sendComputerMove', game.isComputerTurn);

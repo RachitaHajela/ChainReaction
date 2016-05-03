@@ -28,10 +28,6 @@ module game {
             updateUI: updateUI
         });
 
-        // See http://www.sitepoint.com/css3-animation-javascript-event-handlers/
-        document.addEventListener("animationend", animationEndedCallback, false); // standard
-        document.addEventListener("webkitAnimationEnd", animationEndedCallback, false); // WebKit
-        document.addEventListener("oanimationend", animationEndedCallback, false); // Opera
 
         let w: any = window;
         if (w["HTMLInspector"]) {
@@ -70,14 +66,6 @@ module game {
                 fr: "Fermer",
             },
         };
-    }
-
-    function animationEndedCallback() {
-        $rootScope.$apply(function() {
-            log.info("Animation ended");
-            animationEnded = true;
-            //sendComputerMove();
-        });
     }
 
     function sendComputerMove() {
