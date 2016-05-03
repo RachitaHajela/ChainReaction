@@ -63,6 +63,7 @@
   background: radial-gradient(circle at 50% 120%, #fed5d7, #fb898d 10%, #e0080f 80%, #480205 100%);
   */
 }
+/*
 .ball_blue:before {
   content: "";
   position: absolute;
@@ -71,11 +72,10 @@
   width: 90%;
   height: 90%;
   border-radius: 50%;
-  /*
   background: radial-gradient(circle at 50% 0px, #ffffff, rgba(255, 255, 255, 0) 58%);
-  */
   z-index: 2;
 }
+
 .ball_red:before {
   content: "";
   position: absolute;
@@ -84,11 +84,10 @@
   width: 90%;
   height: 90%;
   border-radius: 50%;
-  /*
   background: radial-gradient(circle at 50% 0px, #ffffff, rgba(255, 255, 255, 0) 58%);
-  */
   z-index: 2;
 }
+*/
   /*
 .stage {
   width: 100%;
