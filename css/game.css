@@ -46,10 +46,7 @@
   margin: 0;
   border-radius: 50%;
   position: relative;
-  background: blue;
-  /*
-  background: radial-gradient(circle at 50% 120%, #81e8f6, #76deef 10%, #055194 80%, #062745 100%);
-  */
+  background: radial-gradient(circle at 50% 120%, #81e8f6, #76deef 10%, #055194 80%, #062745 100%);  
 }
 .ball_red {
   display: inline-block;
@@ -58,12 +55,9 @@
   margin: 0;
   border-radius: 50%;
   position: relative;
-  background: red;
-  /*
   background: radial-gradient(circle at 50% 120%, #fed5d7, #fb898d 10%, #e0080f 80%, #480205 100%);
-  */
 }
-/*
+
 .ball_blue:before {
   content: "";
   position: absolute;
@@ -87,14 +81,12 @@
   background: radial-gradient(circle at 50% 0px, #ffffff, rgba(255, 255, 255, 0) 58%);
   z-index: 2;
 }
-*/
-  /*
+  
 .stage {
   width: 100%;
   height: 100%;
   display: inline-block;
   margin: 0%;
-  -webkit-transform: translateZ(0);  
   -webkit-perspective: 1200px;
   -moz-perspective: 1200px;
   -ms-perspective: 1200px;
@@ -106,29 +98,11 @@
   -o-perspective-origin: 50% 50%;
   perspective-origin: 50% 50%;
 }
-  */
+  
 @keyframes slowlyAppear {
   from {opacity: 0.1;}
   to {opacity: 1;}
 }
-/*
-@keyframes moveLeft {
-  from {position:absolute; top:25%; left:10%; width:50%;height:50%}
-  to {position:absolute; top:25%; left:-90%;  width:50%;height:50%}
-}
-@keyframes moveUp {
-  from {position:absolute; top:10%; left:25%; width:50%;height:50%}
-  to {position:absolute; top:-90%; left:25%;  width:50%;height:50%}
-}
-@keyframes moveRight {
-  from {position:absolute; top:25%; left:40%;  width:50%;height:50%}
-  to {position:absolute; top:25%; left:140%;  width:50%;height:50%}
-}
-@keyframes moveDown {
-  from {position:absolute; top:40%; left:25%;  width:50%;height:50%}
-  to {position:absolute; top:140%; left:25%;  width:50%;height:50%}
-}
-*/
 
 @keyframes bckColor {
   from {background-color: yellow}

@@ -141,46 +141,46 @@
                 <div ng-repeat="playerId in [0,1]" style="width:100%; height: 100%" ng-if="game.shouldShowImage(row, col, game.round)">
                     <!-- ng-class="{slowlyAppear: game.shouldSlowlyAppear(row, col, round)}" -->
 
-                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 1)" id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}"
+                    <section class="stage" ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 1)" id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}"
                      style="position:absolute; top:25%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
 
-                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 2) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    <section class="stage" ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 2) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
                     id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:10%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 2) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    <section class="stage" ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 2) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
                     id="{{'e2e_test_ball2_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:40%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
 
-                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    <section class="stage" ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
                     id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:10%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    <section class="stage" ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
                     id="{{'e2e_test_ball2_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:10%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    <section class="stage" ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 3) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
                     id="{{'e2e_test_ball3_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:40%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
 
-                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    <section class="stage" ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
                     id="{{'e2e_test_ball1_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:10%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    <section class="stage" ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
                     id="{{'e2e_test_ball2_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:40%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    <section class="stage" ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
                     id="{{'e2e_test_ball3_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:10%; left:25%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
-                    <section ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
+                    <section class="stage" ng-if="game.containsMolOfPlayer(row, col, game.round, playerId, 4) && !game.shouldAnimateForPlayer(row,col,game.round,playerId)"
                     id="{{'e2e_test_ball4_' + playerId + '_' + row + 'x' + col}}"  style="position:absolute; top:25%; left:40%; width:50%;height:50%">
                         <figure ng-class="{ball_red: playerId == 0, ball_blue: playerId == 1}"></figure>
                     </section>
